@@ -30,8 +30,7 @@
   [![GitHub contributors](https://img.shields.io/github/contributors/smartdusttechnologies/OnlineServiceBookingApp)](https://github.com/smartdusttechnologies/OnlineServiceBookingApp/graphs/contributors)
   [![Open Pull Requests](https://img.shields.io/github/issues-pr-raw/smartdusttechnologies/OnlineServiceBookingApp.svg)](https://github.com/smartdusttechnologies/OnlineServiceBookingApp/pulls)
   [![Activity](https://img.shields.io/github/last-commit/smartdusttechnologies/OnlineServiceBookingApp.svg)](https://github.com/smartdusttechnologies/OnlineServiceBookingApp/commits/main)
-  [![YouTube Channel](https://img.shields.io/badge/Watch_us-Youtube-red)](https://www.youtube.com/@ninjascode509)
-  [![Company Website](https://img.shields.io/badge/Visit_us-Website-blue)](https://enatega.com)
+  [![Company Website](https://img.shields.io/badge/Visit_us-Website-blue)](https://smartdusttechnologies.com)
   [![Closed Issues](https://img.shields.io/github/issues-closed/smartdusttechnologies/OnlineServiceBookingApp?color=success)](https://github.com/smartdusttechnologies/OnlineServiceBookingApp/issues?q=is%3Aissue+is%3Aclosed)
 [![Closed Pull Requests](https://img.shields.io/badge/Closed%20Pull%20Requests-View%20on%20GitHub-blue.svg)](https://github.com/smartdusttechnologies/OnlineServiceBookingApp/pulls?q=is%3Apr+is%3Aclosed)
 
