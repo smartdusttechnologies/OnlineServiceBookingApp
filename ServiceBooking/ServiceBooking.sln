@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanClab.Web.UI", "UrbanClabNew\UrbanClab.Web.UI.csproj", "{90FFBEB5-C1F2-4F99-A94F-18AD7BC9963A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBooking.Web.UI", "ServiceBooking.Web.UI\ServiceBooking.Web.UI.csproj", "{90FFBEB5-C1F2-4F99-A94F-18AD7BC9963A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanClab.Buisness", "UrbanClap.Buisness\UrbanClab.Buisness.csproj", "{7B622F97-3743-4FD4-BA8E-415F53AD8FA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBooking.Buisness", "ServiceBooking.Buisness\ServiceBooking.Buisness.csproj", "{7B622F97-3743-4FD4-BA8E-415F53AD8FA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
