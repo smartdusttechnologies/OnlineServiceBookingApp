@@ -22,8 +22,6 @@ import UserContext from "../../context/User";
 import Analytics from "../../utils/analytics";
 import useStyles from "./styles";
 import DeliveryTabs from "../../components/Tabs/Tabs";
-
-
 function Restaurants() {
   const navigate = useNavigate();
   const { location } = useLocationContext();
@@ -67,6 +65,7 @@ function Restaurants() {
   }, []);
   
   const data = getRestaurents();
+  console.log("raj data",data)
   const loading = false;
   const error = false;
 

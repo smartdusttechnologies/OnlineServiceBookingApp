@@ -17,6 +17,7 @@ import FlashMessage from "../../components/FlashMessage";
 import Footer from "../../components/Footer/Footer";
 import { Header, LoginHeader } from "../../components/Header";
 import Analytics from '../../utils/analytics'
+import datax from "./restData.json"
 import {
   RestaurantClose,
   RestaurantInfo,
@@ -45,11 +46,16 @@ function RestaurantDetail() {
   const [addonData, setAddonData] = useState(null);
   const [reviewModal, setReviewModal] = useState(false);
   const [variationModal, setVariationModal] = useState(false);
-  const { data, loading, error } = getRestaurent(state?.id, query.slug);
+  const data  = datax;
+  const loading = false;
+  const  error  = undefined;
   const allDeals = data?.restaurant?.categories.filter(
     (cat) => cat.foods.length
   );
-console.log(allDeals);
+console.log(loading);
+console.log(data);
+console.log(datax);
+console.log(error);
   const {
     restaurant: restaurantCart,
     setCartRestaurant,

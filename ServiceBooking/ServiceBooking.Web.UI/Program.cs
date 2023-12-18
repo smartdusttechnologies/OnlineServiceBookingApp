@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using ServcieBooking.Buisness;
+using ServcieBooking.Buisness.Infrastructure;
+using ServcieBooking.Buisness.Repository;
+using ServiceBooking.Buisness.Repository.Interface;
+
 namespace ServcieBooking.Web.UI
 {
     public class Program
@@ -18,7 +22,7 @@ namespace ServcieBooking.Web.UI
     }
     public class Startup
     {
-       
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,7 +35,10 @@ namespace ServcieBooking.Web.UI
         {
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
-            //services.ServiceExtensions();
+            services.AddScoped<IResturantRepository,ResturantRepository>();
+            services.AddScoped<IConnectionFactory,ConnectionFactory>();
+            services.AddScoped<IResturantRepository,ResturantRepository>();
+            services.AddApplication();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
