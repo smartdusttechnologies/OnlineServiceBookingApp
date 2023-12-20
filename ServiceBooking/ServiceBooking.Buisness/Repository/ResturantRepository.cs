@@ -6,6 +6,7 @@ using ServcieBooking.Buisness.Repository.Interface;
 using Newtonsoft.Json;
 using ServiceBooking.Buisness.Repository.Interface;
 using Microsoft.AspNetCore.Hosting;
+using ServiceBooking.Buisness.Models;
 
 namespace ServcieBooking.Buisness.Repository
 {
@@ -17,7 +18,7 @@ namespace ServcieBooking.Buisness.Repository
         {
             _hostingEnvironment = hostingEnvironment;
         }
-        public object Get()
+        public ResturantModel Get()
         {
             try
             {
@@ -26,9 +27,9 @@ namespace ServcieBooking.Buisness.Repository
 
                 // Read the JSON file
                 var jsonContent = System.IO.File.ReadAllText(filePath);
-
+               // return jsonContent;
                 // Deserialize JSON to C# object
-                return JsonConvert.DeserializeObject<object>(jsonContent);
+                return JsonConvert.DeserializeObject<ResturantModel>(jsonContent);
 
                 // Use 'myObject' as needed
                 //return myObject;
@@ -36,7 +37,7 @@ namespace ServcieBooking.Buisness.Repository
             catch (Exception ex)
             {
                 // Handle exceptions
-                return "Error";
+                return new ResturantModel();
             }
         }
         public object Get(string resturantId)

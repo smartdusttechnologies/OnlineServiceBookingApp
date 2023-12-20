@@ -17,9 +17,13 @@ export function getRestaurent(id, slug) {
     //return { data, refetch, networkStatus, loading, error };
 }
 export function getRestaurents() {
-    axiosInstance.get("/resturant/get").then((response) => {
-        //setPost(response.data);
-        const raj = "sfd";
-        return response.data;
-      });
+    // axiosInstance.get("/resturant/get").then((response) => {
+    //     //setPost(response.data);
+    //     const raj = "sfd";
+    //     return response.data;
+    //   });
+    axios.get("/resturant/get").then((response)=>{
+      // console.log(response.data);
+       return response.data;
+     })
 }

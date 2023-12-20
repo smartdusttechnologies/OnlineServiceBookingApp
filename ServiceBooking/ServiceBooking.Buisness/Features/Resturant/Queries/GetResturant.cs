@@ -4,13 +4,14 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using ServcieBooking.Buisness.Interface;
 using ServcieBooking.Buisness.Repository.Interface;
+using ServiceBooking.Buisness.Models;
 using ServiceBooking.Buisness.Repository.Interface;
 
 namespace ServcieBooking.Buisness.Features.Resturant
 {
     public static class GetResturant
     {
-        public class Command : IRequest<object>
+        public class Command : IRequest<ResturantModel>
         {
         }
         public class Authorization : IAuthorizationRule<Command>
@@ -28,7 +29,7 @@ namespace ServcieBooking.Buisness.Features.Resturant
                 return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
             }
         }
-        public class Handler : IRequestHandler<Command, object>
+        public class Handler : IRequestHandler<Command, ResturantModel>
         {
             private readonly IResturantRepository _returant;
 
@@ -37,7 +38,7 @@ namespace ServcieBooking.Buisness.Features.Resturant
                 _returant = resturant;
             }
 
-            Task<object> IRequestHandler<Command, object>.Handle(Command request, CancellationToken cancellationToken)
+            public Task<ResturantModel> Handle(Command request, CancellationToken cancellationToken)
             {
                 return Task.FromResult(_returant.Get());
             }

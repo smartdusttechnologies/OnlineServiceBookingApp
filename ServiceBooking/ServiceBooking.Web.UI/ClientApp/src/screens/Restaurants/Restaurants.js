@@ -22,6 +22,7 @@ import UserContext from "../../context/User";
 import Analytics from "../../utils/analytics";
 import useStyles from "./styles";
 import DeliveryTabs from "../../components/Tabs/Tabs";
+import axios from "axios";
 function Restaurants() {
   const navigate = useNavigate();
   const { location } = useLocationContext();
@@ -33,7 +34,9 @@ function Restaurants() {
   const classes = useStyles();
   const { clearCart, restaurant: cartRestaurant } = useContext(UserContext);
   const [active, setActive] = useState("delivery");
-
+  const [data,setData] = useState([]);
+    
+ 
   const navigateClearCart = useCallback(async () => {
     await clearCart();
     navigate(`/restaurant/${navigateData.slug}`, { state: navigateData });
@@ -63,8 +66,15 @@ function Restaurants() {
   const toggleSnackbar = useCallback(() => {
     setMessage({});
   }, []);
-  
-  const data = getRestaurents();
+
+  useEffect(()=>{
+    axios.get("/resturant/get").then((response)=>{
+      // console.log(response.data);
+       setData(response.data);
+     })
+    //setData(getRestaurents());
+    console.log(getRestaurents());
+  })
   console.log("raj data",data)
   const loading = false;
   const error = false;
@@ -128,7 +138,6 @@ function Restaurants() {
   const inactiveTabChange = () => {
     setActive("pickup");
   };
-
   const Map = () => {
     return (
       <Grid className={classes.mapImage}>

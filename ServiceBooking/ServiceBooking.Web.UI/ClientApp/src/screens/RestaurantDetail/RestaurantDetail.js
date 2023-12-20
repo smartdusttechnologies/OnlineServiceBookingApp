@@ -34,6 +34,7 @@ import UserContext from "../../context/User";
 import { getRestaurent } from "../../services/resturantServices.js";
 import { DAYS } from "../../utils/constantValues";
 import useStyles from "./styles";
+import axios from "axios";
 
 function RestaurantDetail() {
   const theme = useTheme();
@@ -46,9 +47,17 @@ function RestaurantDetail() {
   const [addonData, setAddonData] = useState(null);
   const [reviewModal, setReviewModal] = useState(false);
   const [variationModal, setVariationModal] = useState(false);
-  const data  = datax;
+  const [data,setData]  = useState([]);
   const loading = false;
   const  error  = undefined;
+  useEffect(()=>{
+    axios.post("/resturant/getById",{"resturantId":"dummyData"}).then((response)=>{
+      // console.log(response.data);
+       setData(response.data);
+     })
+    //setData(getRestaurents());
+    console.log(getRestaurents());
+  })
   const allDeals = data?.restaurant?.categories.filter(
     (cat) => cat.foods.length
   );

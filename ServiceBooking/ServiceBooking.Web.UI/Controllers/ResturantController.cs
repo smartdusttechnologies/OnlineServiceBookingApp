@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ServcieBooking.Buisness.Features.Resturant;
+using ServiceBooking.Buisness.Models;
 
 namespace ServiceBooking.Web.UI.Controllers
 {
@@ -16,14 +17,15 @@ namespace ServiceBooking.Web.UI.Controllers
         }
         [Route("Get")]
         [HttpGet]
-        public object Get()
+        public ResturantModel Get()
         {
             var resp = _mediator.Send(new GetResturant.Command());
-            return resp;
+        var s = resp.Result;
+            return resp.Result;
         }
         [Route("GetById")]
         [HttpGet]
-        public object Get(string resturantId)
+        public ResturantDetailModel Get(string resturantId)
         {
             return _mediator.Send(new GetByIdResturant.Command().resturantId = resturantId);
         }
