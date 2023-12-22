@@ -1,10 +1,11 @@
-﻿using ServiceBooking.Buisness.Models;
+﻿using ServiceBooking.Business.Models;
+using ServiceBooking.Business.Models.Resturant;
 
-namespace ServiceBooking.Buisness.Repository.Interface
+namespace ServiceBooking.Business.Repository.Interface
 {
     public interface IResturantRepository
     {
         ResturantModel Get();
-        object Get(string resturantId);
+        ResturantDetailModel Get(string resturantId);
     }
 }

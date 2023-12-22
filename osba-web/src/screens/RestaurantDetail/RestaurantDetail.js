@@ -46,6 +46,7 @@ function RestaurantDetail() {
   const [reviewModal, setReviewModal] = useState(false);
   const [variationModal, setVariationModal] = useState(false);
   const { data, loading, error } = getRestaurent(state?.id, query.slug);
+  const [restaurantInfo,setRestInfo] = useState([]);
   const allDeals = data?.restaurant?.categories.filter(
     (cat) => cat.foods.length
   );
@@ -72,7 +73,8 @@ console.log(allDeals);
     openingTimes: data?.restaurant?.openingTimes ?? [],
     deals: deals,
   };
-  const restaurantInfo = {
+  const getInfo = () =>{
+  return {
     _id: data?.restaurant._id ?? "",
     name: data?.restaurant?.name ?? "...",
     image: data?.restaurant?.image ?? "",
@@ -84,7 +86,9 @@ console.log(allDeals);
     isAvailable: data?.restaurant?.isAvailable ?? true,
     openingTimes: data?.restaurant?.openingTimes ?? [],
   };
+}
 
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

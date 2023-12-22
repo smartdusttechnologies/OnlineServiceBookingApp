@@ -31,12 +31,12 @@ import {
   RestaurantHeader,
 } from "../../components/RestaurantDetailComponent";
 import UserContext from "../../context/User";
-import { getRestaurent } from "../../services/resturantServices.js";
+import { getRestaurant } from "../../services/resturantServices.js";
 import { DAYS } from "../../utils/constantValues";
 import useStyles from "./styles";
 import axios from "axios";
 
-function RestaurantDetail() {
+ function RestaurantDetail() {
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("lg"));
   const classes = useStyles();
@@ -47,24 +47,47 @@ function RestaurantDetail() {
   const [addonData, setAddonData] = useState(null);
   const [reviewModal, setReviewModal] = useState(false);
   const [variationModal, setVariationModal] = useState(false);
-  const [data,setData]  = useState([]);
-  const loading = false;
-  const  error  = undefined;
-  useEffect(()=>{
-    axios.post("/resturant/getById",{"resturantId":"dummyData"}).then((response)=>{
-      // console.log(response.data);
-       setData(response.data);
-     })
+  const [data,setData] = useState([]);
+  const [error,setError] = useState(undefined);
+  const [loading,setLoading] = useState(true);
+  useEffect(() => {
+   
+        const id = 123; // Replace with your actual ID
+        const slug = 'example-restaurant'; // Replace with your actual slug
+        const data = getRestaurant(id, slug);
+        setData(data);
+        if(data!= []){
+        setError(error);
+        setLoading(false);
+        }
+  }, []);
+  //const data =datax;
+  // const fetchData = () =>{
+  //   const resturantId = "raj";
+  //   axios.get(`/api/resturant/GetResturantDetail/${resturantId}`).then((response)=>{
+  //     setData(response.data);
+  //     setLoading(false);
+  //     console.log(data, "raj");
+  //     console.log(response.data, "raj");
+  //   });
+  // }
+    
+      //  useEffect(()=>{
+      //   fetchData();
+      //  },[])  // Invoke the fetchData function
+  
+    //   // Cleanup function to cancel the request or perform other cleanup
+      
+   // Include resturantId in the dependency array
+  
     //setData(getRestaurents());
-    console.log(getRestaurents());
-  })
+    if (!('restaurant' in data)) {
+      return <div>Error: _id property not found</div>;
+    }
+  console.log(data.restaurant.categories);
   const allDeals = data?.restaurant?.categories.filter(
     (cat) => cat.foods.length
   );
-console.log(loading);
-console.log(data);
-console.log(datax);
-console.log(error);
   const {
     restaurant: restaurantCart,
     setCartRestaurant,
@@ -87,6 +110,7 @@ console.log(error);
     openingTimes: data?.restaurant?.openingTimes ?? [],
     deals: deals,
   };
+  
   const restaurantInfo = {
     _id: data?.restaurant._id ?? "",
     name: data?.restaurant?.name ?? "...",

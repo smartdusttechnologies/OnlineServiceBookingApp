@@ -3,18 +3,12 @@ import resdata from './restData.json';
 import axios from "axios"
 import {axiosInstance} from "../utils/axiosInstance";
 import { execute } from 'graphql';
-export function getRestaurent(id, slug) {
-    axiosInstance.get("/resturant/get").then((response) => {
-        //setPost(response.data);
-        return response.data;
-      });
-    //const refetch = 7;
-    //const networkStatus = 7;
-    //const loading = false;
-    //const error = undefined;
 
-    //const data = datax;
-    //return { data, refetch, networkStatus, loading, error };
+ export async function getRestaurant(id, slug) {
+  axios.get(`/api/resturant/GetResturantDetail/${slug}`).then((response)=>{
+    const {data} = response;
+    return response.data;
+  });
 }
 export function getRestaurents() {
     // axiosInstance.get("/resturant/get").then((response) => {

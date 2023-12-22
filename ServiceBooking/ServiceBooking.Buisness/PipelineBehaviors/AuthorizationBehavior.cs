@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using ServcieBooking.Buisness.Interface;
+using ServcieBooking.Business.Interface;
 
-namespace ServcieBooking.Buisness.PipelineBehaviors
+namespace ServcieBooking.Business.PipelineBehaviors
 {
     public class AuthorizationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {

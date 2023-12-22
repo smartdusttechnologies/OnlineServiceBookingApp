@@ -1,10 +1,10 @@
 ﻿using Dapper;
 using System.Data;
-using ServcieBooking.Buisness.Models;
-using ServcieBooking.Buisness.Infrastructure;
-using ServcieBooking.Buisness.Repository.Interface;
+using ServcieBooking.Business.Models;
+using ServcieBooking.Business.Infrastructure;
+using ServcieBooking.Business.Repository.Interface;
 
-namespace ServcieBooking.Buisness.Repository
+namespace ServcieBooking.Business.Repository
 {
     public class UiPageTypeRepository : IUiPageTypeRepository
     {

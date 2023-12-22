@@ -2,15 +2,16 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using ServcieBooking.Buisness.Interface;
-using ServcieBooking.Buisness.Repository.Interface;
-using ServiceBooking.Buisness.Repository.Interface;
+using ServcieBooking.Business.Interface;
+using ServcieBooking.Business.Repository.Interface;
+using ServiceBooking.Business.Models.Resturant;
+using ServiceBooking.Business.Repository.Interface;
 
-namespace ServcieBooking.Buisness.Features.Resturant
+namespace ServcieBooking.Business.Features.Resturant
 {
     public static class GetByIdResturant
     {
-        public class Command : IRequest<object>
+        public class Command : IRequest<ResturantDetailModel>
         {
             public string resturantId { get; set; }
         }
@@ -29,7 +30,7 @@ namespace ServcieBooking.Buisness.Features.Resturant
                 return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
             }
         }
-        public class Handler : IRequestHandler<Command, object>
+        public class Handler : IRequestHandler<Command, ResturantDetailModel>
         {
             private readonly IResturantRepository _returant;
 
@@ -38,7 +39,7 @@ namespace ServcieBooking.Buisness.Features.Resturant
                 _returant = resturant;
             }
 
-            Task<object> IRequestHandler<Command, object>.Handle(Command request, CancellationToken cancellationToken)
+            Task<ResturantDetailModel> IRequestHandler<Command, ResturantDetailModel>.Handle(Command request, CancellationToken cancellationToken)
             {
                 return Task.FromResult(_returant.Get(request.resturantId));
             }

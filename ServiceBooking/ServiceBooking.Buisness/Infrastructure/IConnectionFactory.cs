@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace ServcieBooking.Buisness.Infrastructure
+namespace ServcieBooking.Business.Infrastructure
 {
     /// <summary>
     /// Implimenting interface for connection factory

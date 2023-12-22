@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ServcieBooking.Buisness.Models;
+using ServcieBooking.Business.Models;
 
-namespace ServcieBooking.Buisness.Repository.Interface
+namespace ServcieBooking.Business.Repository.Interface
 {
     public interface IUiPageTypeRepository
     {

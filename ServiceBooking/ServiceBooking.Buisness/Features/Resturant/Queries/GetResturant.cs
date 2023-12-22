@@ -2,12 +2,12 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using ServcieBooking.Buisness.Interface;
-using ServcieBooking.Buisness.Repository.Interface;
-using ServiceBooking.Buisness.Models;
-using ServiceBooking.Buisness.Repository.Interface;
+using ServcieBooking.Business.Interface;
+using ServcieBooking.Business.Repository.Interface;
+using ServiceBooking.Business.Models;
+using ServiceBooking.Business.Repository.Interface;
 
-namespace ServcieBooking.Buisness.Features.Resturant
+namespace ServcieBooking.Business.Features.Resturant
 {
     public static class GetResturant
     {

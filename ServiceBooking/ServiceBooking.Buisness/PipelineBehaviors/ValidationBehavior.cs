@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 
-namespace ServcieBooking.Buisness.PipelineBehaviors
+namespace ServcieBooking.Business.PipelineBehaviors
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
         where TRequest : IRequest<TResponse>

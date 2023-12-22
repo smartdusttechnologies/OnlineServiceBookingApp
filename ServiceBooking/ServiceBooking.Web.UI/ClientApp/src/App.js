@@ -24,6 +24,7 @@ import VerifyEmail from "./screens/VerifyEmail/VerifyEmail";
 import VerifyForgotOtp from "./screens/VerifyForgotOtp/VerifyForgotOtp";
 import ResetPassword from "./screens/ResetPassword/ResetPassword";
 import RestaurantDetail from "./screens/RestaurantDetail/RestaurantDetail";
+import ResturantDetailTwo from "./screens/RestaurantDetail/ResturantDetailTwo";
 import Restaurants from "./screens/Restaurants/Restaurants";
 import Stripe from "./screens/Stripe/Stripe";
 import Terms from "./screens/Terms/Terms";
@@ -96,6 +97,7 @@ function App() {
       />
       ;
       <Routes>
+        <Route path="/yashwa" element={<ResturantDetailTwo/>}/>
         <Route path="/" element={<Home />} />
         <Route path="/restaurant-list" element={<Restaurants />} />
         <Route path="/restaurant/:slug" element={<RestaurantDetail />} />

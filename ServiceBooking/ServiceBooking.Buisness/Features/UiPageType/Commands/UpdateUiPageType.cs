@@ -2,14 +2,14 @@
 //using FluentValidation;
 //using MediatR;
 //using Microsoft.AspNetCore.Http;
-//using ServcieBooking.Buisness.Interface;
-//using ServcieBooking.Buisness.Repository.Interface;
+//using ServcieBooking.Business.Interface;
+//using ServcieBooking.Business.Repository.Interface;
 
-//namespace ServcieBooking.Buisness.Features.UiPageType.Commands
+//namespace ServcieBooking.Business.Features.UiPageType.Commands
 //{
 //    public static class UpdateUiPageType
 //    {
-//        public class Command : IRequest<ServcieBooking.Buisness.Models.UiPageType>
+//        public class Command : IRequest<ServcieBooking.Business.Models.UiPageType>
 //        {
 //            public string Name { get; set; }
 //            public int Id { get; set; }
@@ -42,7 +42,7 @@
 //                return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
 //            }
 //        }
-//        public class Handler : IRequestHandler<Command, ServcieBooking.Buisness.Models.UiPageType>
+//        public class Handler : IRequestHandler<Command, ServcieBooking.Business.Models.UiPageType>
 //        {
 //            private readonly IUiPageTypeRepository _uiPageTypeRepository;
 //            private readonly IMapper _mapper;

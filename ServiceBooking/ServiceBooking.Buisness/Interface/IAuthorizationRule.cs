@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace ServcieBooking.Buisness.Interface
+namespace ServcieBooking.Business.Interface
 {
     public interface IAuthorizationRule<in TRequest>
     {

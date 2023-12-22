@@ -2,14 +2,14 @@
 //using FluentValidation;
 //using MediatR;
 //using Microsoft.AspNetCore.Http;
-//using ServcieBooking.Buisness.Interface;
-//using ServcieBooking.Buisness.Repository.Interface;
+//using ServcieBooking.Business.Interface;
+//using ServcieBooking.Business.Repository.Interface;
 
-//namespace ServcieBooking.Buisness.Features.UiPageType
+//namespace ServcieBooking.Business.Features.UiPageType
 //{
 //    public static class GetResturant
 //    {
-//        public class Command : IRequest<List<ServcieBooking.Buisness.Models.UiPageType>>
+//        public class Command : IRequest<List<ServcieBooking.Business.Models.UiPageType>>
 //        {
 //        }
 //        public class Authorization : IAuthorizationRule<Command>
@@ -27,7 +27,7 @@
 //                return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
 //            }
 //        }
-//        public class Handler : IRequestHandler<Command, List<ServcieBooking.Buisness.Models.UiPageType>>
+//        public class Handler : IRequestHandler<Command, List<ServcieBooking.Business.Models.UiPageType>>
 //        {
 //            private readonly IUiPageTypeRepository _uiPageTypeRepository;
 //            private readonly IMapper _mapper;

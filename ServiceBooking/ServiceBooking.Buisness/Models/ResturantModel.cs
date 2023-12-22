@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceBooking.Buisness.Models
+namespace ServiceBooking.Business.Models
 {
     public class Category
     {

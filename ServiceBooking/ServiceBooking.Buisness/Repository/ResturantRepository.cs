@@ -1,14 +1,15 @@
 ﻿using Dapper;
 using System.Data;
-using ServcieBooking.Buisness.Models;
-using ServcieBooking.Buisness.Infrastructure;
-using ServcieBooking.Buisness.Repository.Interface;
+using ServcieBooking.Business.Models;
+using ServcieBooking.Business.Infrastructure;
+using ServcieBooking.Business.Repository.Interface;
 using Newtonsoft.Json;
-using ServiceBooking.Buisness.Repository.Interface;
+using ServiceBooking.Business.Repository.Interface;
 using Microsoft.AspNetCore.Hosting;
-using ServiceBooking.Buisness.Models;
+using ServiceBooking.Business.Models;
+using ServiceBooking.Business.Models.Resturant;
 
-namespace ServcieBooking.Buisness.Repository
+namespace ServcieBooking.Business.Repository
 {
     public class ResturantRepository : IResturantRepository
     {
@@ -40,7 +41,7 @@ namespace ServcieBooking.Buisness.Repository
                 return new ResturantModel();
             }
         }
-        public object Get(string resturantId)
+        public ResturantDetailModel Get(string resturantId)
         {
             try
             {
@@ -51,7 +52,7 @@ namespace ServcieBooking.Buisness.Repository
                 var jsonContent = System.IO.File.ReadAllText(filePath);
 
                 // Deserialize JSON to C# object
-                var myObject = JsonConvert.DeserializeObject<object>(jsonContent);
+                var myObject = JsonConvert.DeserializeObject<ResturantDetailModel>(jsonContent);
 
                 // Use 'myObject' as needed
                 return myObject;
@@ -59,7 +60,7 @@ namespace ServcieBooking.Buisness.Repository
             catch (Exception ex)
             {
                 // Handle exceptions
-                return "Error";
+                return new ResturantDetailModel();
             }
         }
     }

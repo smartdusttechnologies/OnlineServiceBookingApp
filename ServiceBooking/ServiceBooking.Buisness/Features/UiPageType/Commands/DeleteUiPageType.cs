@@ -2,10 +2,10 @@
 //using FluentValidation;
 //using MediatR;
 //using Microsoft.AspNetCore.Http;
-//using ServcieBooking.Buisness.Interface;
-//using ServcieBooking.Buisness.Repository.Interface;
+//using ServcieBooking.Business.Interface;
+//using ServcieBooking.Business.Repository.Interface;
 
-//namespace ServcieBooking.Buisness.Features.UiPageType.Commands
+//namespace ServcieBooking.Business.Features.UiPageType.Commands
 //{
 //    public static class DeleteUiPageType
 //    {

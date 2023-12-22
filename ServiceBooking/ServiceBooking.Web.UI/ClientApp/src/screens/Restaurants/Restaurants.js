@@ -66,18 +66,19 @@ function Restaurants() {
   const toggleSnackbar = useCallback(() => {
     setMessage({});
   }, []);
-
+  const [loading,setLoading] = useState(true);
+  const error = false;
   useEffect(()=>{
-    axios.get("/resturant/get").then((response)=>{
+    axios.get("/api/resturant/GetResturant").then((response)=>{
       // console.log(response.data);
        setData(response.data);
+       setLoading(false);
      })
     //setData(getRestaurents());
     console.log(getRestaurents());
   })
   console.log("raj data",data)
-  const loading = false;
-  const error = false;
+
 
   if (loading || error) {
     return (

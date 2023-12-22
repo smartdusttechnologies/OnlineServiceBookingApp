@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using ServcieBooking.Buisness;
-using ServcieBooking.Buisness.Infrastructure;
-using ServcieBooking.Buisness.Repository;
-using ServiceBooking.Buisness.Repository.Interface;
+using ServcieBooking.Business;
+using ServcieBooking.Business.Infrastructure;
+using ServcieBooking.Business.Repository;
+using ServiceBooking.Business.Repository.Interface;
 
 namespace ServcieBooking.Web.UI
 {

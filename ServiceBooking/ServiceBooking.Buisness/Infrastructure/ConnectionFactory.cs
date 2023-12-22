@@ -3,7 +3,7 @@ using System.Data.Common;
 using Microsoft.Extensions.Configuration;
 
 
-namespace ServcieBooking.Buisness.Infrastructure
+namespace ServcieBooking.Business.Infrastructure
 {
     /// <summary>
     /// Implimenting Connectionfactory for establishing connection with databsase

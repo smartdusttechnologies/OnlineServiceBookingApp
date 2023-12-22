@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using ServcieBooking.Buisness.Interface;
-using ServcieBooking.Buisness.PipelineBehaviors;
-using ServcieBooking.Buisness.Features.Resturant;
+using ServcieBooking.Business.Interface;
+using ServcieBooking.Business.PipelineBehaviors;
+using ServcieBooking.Business.Features.Resturant;
 
-namespace ServcieBooking.Buisness
+namespace ServcieBooking.Business
 {
     public static class ServiceExtensions
     {
