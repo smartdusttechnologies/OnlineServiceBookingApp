@@ -1,15 +1,10 @@
-﻿using Dapper;
-using System.Data;
-using ServcieBooking.Business.Models;
-using ServcieBooking.Business.Infrastructure;
-using ServcieBooking.Business.Repository.Interface;
-using Newtonsoft.Json;
-using ServiceBooking.Business.Repository.Interface;
+﻿using Newtonsoft.Json;
 using Microsoft.AspNetCore.Hosting;
-using ServiceBooking.Business.Models;
-using ServiceBooking.Business.Models.Resturant;
+using ServiceBooking.Buisness.Repository.Interfaces;
+using ServiceBooking.Buisness.Core.Model;
+using ServiceBooking.Buisness.Core.Model.Resturant;
 
-namespace ServcieBooking.Business.Repository
+namespace ServiceBooking.Buisness.Repository
 {
     public class ResturantRepository : IResturantRepository
     {
@@ -27,8 +22,8 @@ namespace ServcieBooking.Business.Repository
                 var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "resturant.json");
 
                 // Read the JSON file
-                var jsonContent = System.IO.File.ReadAllText(filePath);
-               // return jsonContent;
+                var jsonContent = File.ReadAllText(filePath);
+                // return jsonContent;
                 // Deserialize JSON to C# object
                 return JsonConvert.DeserializeObject<ResturantModel>(jsonContent);
 
@@ -49,7 +44,7 @@ namespace ServcieBooking.Business.Repository
                 var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "resturantDetails.json");
 
                 // Read the JSON file
-                var jsonContent = System.IO.File.ReadAllText(filePath);
+                var jsonContent = File.ReadAllText(filePath);
 
                 // Deserialize JSON to C# object
                 var myObject = JsonConvert.DeserializeObject<ResturantDetailModel>(jsonContent);

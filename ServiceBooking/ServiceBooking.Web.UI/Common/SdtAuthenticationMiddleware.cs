@@ -1,6 +1,6 @@
 ﻿
 using Microsoft.IdentityModel.Tokens;
-using ServiceBooking.Business.Core.Model;
+using ServiceBooking.Buisness.Core.Model.Security;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 

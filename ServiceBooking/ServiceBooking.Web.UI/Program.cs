@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using ServcieBooking.Business;
 using ServcieBooking.Business.Infrastructure;
-using ServcieBooking.Business.Repository;
-using ServiceBooking.Business.Repository.Interface;
+using ServiceBooking.Buisness.Repository;
+using ServiceBooking.Buisness.Repository.Interfaces;
 
 namespace ServcieBooking.Web.UI
 {
@@ -34,6 +34,7 @@ namespace ServcieBooking.Web.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup));
             services.AddHttpContextAccessor();
             services.AddScoped<IResturantRepository,ResturantRepository>();
             services.AddScoped<IConnectionFactory,ConnectionFactory>();

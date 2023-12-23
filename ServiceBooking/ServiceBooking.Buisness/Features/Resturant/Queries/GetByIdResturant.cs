@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using ServcieBooking.Business.Interface;
-using ServcieBooking.Business.Repository.Interface;
-using ServiceBooking.Business.Models.Resturant;
-using ServiceBooking.Business.Repository.Interface;
+using ServiceBooking.Buisness.Core.Model.Resturant;
+using ServiceBooking.Buisness.Repository.Interfaces;
 
 namespace ServcieBooking.Business.Features.Resturant
 {

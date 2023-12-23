@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization.Infrastructure;
 
-namespace ServiceBooking.Business.Core.Model
+namespace ServiceBooking.Buisness.Core.Model.Security
 {
     public static class Operations
     {

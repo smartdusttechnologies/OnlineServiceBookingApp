@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceBooking.Business.Models.Resturant
+namespace ServiceBooking.Buisness.Core.Model.Resturant
 {
     public class Addon
     {

@@ -4,20 +4,9 @@ import axios from "axios"
 import {axiosInstance} from "../utils/axiosInstance";
 import { execute } from 'graphql';
 
- export async function getRestaurant(id, slug) {
-  axios.get(`/api/resturant/GetResturantDetail/${slug}`).then((response)=>{
-    const {data} = response;
-    return response.data;
-  });
+ export function getRestaurant(id, slug) {
+  return axios.get(`/api/resturant/GetResturantDetail/${slug}`);
 }
 export function getRestaurents() {
-    // axiosInstance.get("/resturant/get").then((response) => {
-    //     //setPost(response.data);
-    //     const raj = "sfd";
-    //     return response.data;
-    //   });
-    axios.get("/resturant/get").then((response)=>{
-      // console.log(response.data);
-       return response.data;
-     })
+    return axios.get("/api/resturant/GetResturant");
 }

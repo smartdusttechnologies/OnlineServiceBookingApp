@@ -1,6 +1,7 @@
 ﻿using System;
+using ServiceBooking.Business.Core.Model;
 
-namespace ServiceBooking.Business.Core.Model
+namespace ServiceBooking.Buisness.Core.Model.Security
 {
     public class LoginRequest : Entity
     {

@@ -35,7 +35,14 @@ function Restaurants() {
   const { clearCart, restaurant: cartRestaurant } = useContext(UserContext);
   const [active, setActive] = useState("delivery");
   const [data,setData] = useState([]);
-    
+  const [loading,setLoading] = useState(true);
+  const error = false;
+  useEffect(()=>{
+     const response = getRestaurents();
+     console.log(response.data);
+     setData(response.data);
+     setLoading(false);
+  },[])
  
   const navigateClearCart = useCallback(async () => {
     await clearCart();
@@ -66,20 +73,6 @@ function Restaurants() {
   const toggleSnackbar = useCallback(() => {
     setMessage({});
   }, []);
-  const [loading,setLoading] = useState(true);
-  const error = false;
-  useEffect(()=>{
-    axios.get("/api/resturant/GetResturant").then((response)=>{
-      // console.log(response.data);
-       setData(response.data);
-       setLoading(false);
-     })
-    //setData(getRestaurents());
-    console.log(getRestaurents());
-  })
-  console.log("raj data",data)
-
-
   if (loading || error) {
     return (
       <Grid container>

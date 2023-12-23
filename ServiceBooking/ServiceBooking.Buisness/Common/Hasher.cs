@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using ServiceBooking.Business.Core.Model;
+using ServiceBooking.Buisness.Core.Model.Security;
 using System.Security.Cryptography;
 using System.Text;
 

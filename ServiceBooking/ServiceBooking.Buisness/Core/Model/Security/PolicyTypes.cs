@@ -1,4 +1,4 @@
-﻿namespace ServiceBooking.Business.Core.Model
+﻿namespace ServiceBooking.Buisness.Core.Model.Security
 {
     /// <summary>
     /// Policy Type User Permission

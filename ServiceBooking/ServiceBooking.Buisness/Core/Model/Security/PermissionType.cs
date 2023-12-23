@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServiceBooking.Business.Core.Model
+namespace ServiceBooking.Buisness.Core.Model.Security
 {
     public enum PermissionType
     {

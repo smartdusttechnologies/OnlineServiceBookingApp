@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ServcieBooking.Business.Features.Resturant;
-using ServiceBooking.Business.Models;
-using ServiceBooking.Business.Models.Resturant;
+using ServiceBooking.Buisness.Core.Model;
+using ServiceBooking.Buisness.Core.Model.Resturant;
 
 namespace ServiceBooking.Web.UI.Controllers
 {

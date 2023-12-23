@@ -1,4 +1,6 @@
-﻿namespace ServiceBooking.Business.Core.Model
+﻿using ServiceBooking.Business.Core.Model;
+
+namespace ServiceBooking.Buisness.Core.Model.Security
 {
     /// <summary>
     /// Class to get the user role with claims.

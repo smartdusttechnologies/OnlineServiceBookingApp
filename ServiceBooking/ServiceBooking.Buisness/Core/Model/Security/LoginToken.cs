@@ -1,7 +1,7 @@
-﻿using ServiceBooking.Business.Core.Model;
-using System;
+﻿using System;
+using ServiceBooking.Business.Core.Model;
 
-namespace ServiceBooking.Business.Core.Model
+namespace ServiceBooking.Buisness.Core.Model.Security
 {
     public class LoginToken : Entity
     {
@@ -10,7 +10,7 @@ namespace ServiceBooking.Business.Core.Model
         /// </summary>
         public int UserId { get; set; }
         /// <summary>
-        /// User Name.B
+        /// User Name.
         /// </summary>
         public string UserName { get; set; }
 

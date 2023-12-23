@@ -31,11 +31,10 @@ import {
   RestaurantHeader,
 } from "../../components/RestaurantDetailComponent";
 import UserContext from "../../context/User";
-import { getRestaurant } from "../../services/resturantServices.js";
+import {getRestaurant} from "../../services/resturantServices.js";
 import { DAYS } from "../../utils/constantValues";
 import useStyles from "./styles";
 import axios from "axios";
-
  function RestaurantDetail() {
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("lg"));
@@ -51,44 +50,25 @@ import axios from "axios";
   const [error,setError] = useState(undefined);
   const [loading,setLoading] = useState(true);
   useEffect(() => {
-   
+    const fetchData = async () => {
+      console.log('Fetching data...');
+      try {
         const id = 123; // Replace with your actual ID
         const slug = 'example-restaurant'; // Replace with your actual slug
-        const data = getRestaurant(id, slug);
-        setData(data);
-        if(data!= []){
+        const response = await getRestaurant(id, slug);
+        console.log('Data:', response.data);
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error:', error);
         setError(error);
         setLoading(false);
-        }
+      }
+    };
+    console.log('Executing useEffect...');
+    fetchData();
   }, []);
-  //const data =datax;
-  // const fetchData = () =>{
-  //   const resturantId = "raj";
-  //   axios.get(`/api/resturant/GetResturantDetail/${resturantId}`).then((response)=>{
-  //     setData(response.data);
-  //     setLoading(false);
-  //     console.log(data, "raj");
-  //     console.log(response.data, "raj");
-  //   });
-  // }
-    
-      //  useEffect(()=>{
-      //   fetchData();
-      //  },[])  // Invoke the fetchData function
-  
-    //   // Cleanup function to cancel the request or perform other cleanup
-      
-   // Include resturantId in the dependency array
-  
-    //setData(getRestaurents());
-    if (!('restaurant' in data)) {
-      return <div>Error: _id property not found</div>;
-    }
-  console.log(data.restaurant.categories);
-  const allDeals = data?.restaurant?.categories.filter(
-    (cat) => cat.foods.length
-  );
-  const {
+   const {
     restaurant: restaurantCart,
     setCartRestaurant,
     checkItemCart,
@@ -98,32 +78,7 @@ import axios from "axios";
     clearCart,
     isLoggedIn,
   } = useContext(UserContext);
-  const deals = allDeals?.map((c, index) => ({
-    ...c,
-    index,
-  }));
-  const headerData = {
-    name: data?.restaurant?.name ?? "...",
-    averageReview: data?.restaurant?.reviewData.ratings ?? "...",
-    averageTotal: data?.restaurant?.reviewData.total ?? "...",
-    isAvailable: data?.restaurant?.isAvailable ?? true,
-    openingTimes: data?.restaurant?.openingTimes ?? [],
-    deals: deals,
-  };
   
-  const restaurantInfo = {
-    _id: data?.restaurant._id ?? "",
-    name: data?.restaurant?.name ?? "...",
-    image: data?.restaurant?.image ?? "",
-    deals: deals,
-    reviewData: data?.restaurant?.reviewData ?? {},
-    address: data?.restaurant?.address ?? "",
-    deliveryCharges: data?.restaurant?.deliveryCharges ?? "",
-    deliveryTime: data?.restaurant?.deliveryTime ?? "...",
-    isAvailable: data?.restaurant?.isAvailable ?? true,
-    openingTimes: data?.restaurant?.openingTimes ?? [],
-  };
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -166,7 +121,6 @@ import axios from "axios";
           hours <= Number(t.endTime[0]) &&
           minutes <= Number(t.endTime[1])
       );
-
       return times.length > 0;
     } else return false;
   }, [data]);
@@ -205,8 +159,6 @@ import axios from "axios";
       title: food.title,
       restaurantName:food.restaurantName,
       variations:food.variations
-
-
     })
   };
 
@@ -217,6 +169,39 @@ import axios from "axios";
   const toggleSnackbar = useCallback(() => {
     setMainError({});
   }, []);
+
+  if(loading){
+    return <CircularProgress color="primary" size={48} />;
+  }
+  const allDeals = data?.restaurant?.categories.filter(
+    (cat) => cat.foods.length
+  );
+
+  const deals = allDeals?.map((c, index) => ({
+    ...c,
+    index,
+  }));
+  const headerData = {
+    name: data?.restaurant?.name ?? "...",
+    averageReview: data?.restaurant?.reviewData.ratings ?? "...",
+    averageTotal: data?.restaurant?.reviewData.total ?? "...",
+    isAvailable: data?.restaurant?.isAvailable ?? true,
+    openingTimes: data?.restaurant?.openingTimes ?? [],
+    deals: deals,
+  };
+  
+  const restaurantInfo = {
+    _id: data?.restaurant._id ?? "",
+    name: data?.restaurant?.name ?? "...",
+    image: data?.restaurant?.image ?? "",
+    deals: deals,
+    reviewData: data?.restaurant?.reviewData ?? {},
+    address: data?.restaurant?.address ?? "",
+    deliveryCharges: data?.restaurant?.deliveryCharges ?? "",
+    deliveryTime: data?.restaurant?.deliveryTime ?? "...",
+    isAvailable: data?.restaurant?.isAvailable ?? true,
+    openingTimes: data?.restaurant?.openingTimes ?? [],
+  };
 
   if (loading || error) {
     return (

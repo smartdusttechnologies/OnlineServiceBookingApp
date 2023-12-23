@@ -1,6 +1,6 @@
 ﻿
 
-namespace SmartdustApp.Common
+namespace ServiceBooking.Common
 {
     public class SessionContext
     {

@@ -1,4 +1,4 @@
-﻿namespace ServcieBooking.Business.Models
+﻿namespace ServiceBooking.Buisness.Core.Model
 {
     public class UiPageType
     {
