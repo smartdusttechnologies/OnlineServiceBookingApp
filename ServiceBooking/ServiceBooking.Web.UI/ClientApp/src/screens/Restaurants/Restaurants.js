@@ -38,10 +38,21 @@ function Restaurants() {
   const [loading,setLoading] = useState(true);
   const error = false;
   useEffect(()=>{
-     const response = getRestaurents();
-     console.log(response.data);
-     setData(response.data);
-     setLoading(false);
+    const fetchData = async () => {
+      console.log('Fetching data...');
+      try {
+        const response = await getRestaurents();
+        console.log(response.data);
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error:', error);
+        setLoading(false);
+      }
+    };
+    console.log('Executing useEffect...');
+    fetchData();
+    
   },[])
  
   const navigateClearCart = useCallback(async () => {
