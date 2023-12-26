@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-namespace ServiceBooking.Business.Common
+﻿namespace ServiceBooking.Business.Common
 {
     public class RequestResult<T> : ResultBase
     {
@@ -23,7 +22,6 @@ namespace ServiceBooking.Business.Common
                 return successful;
             }
         }
-
         #endregion
 
         #region Constructors

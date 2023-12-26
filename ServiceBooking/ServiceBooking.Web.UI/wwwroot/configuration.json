@@ -1,0 +1,9 @@
+{
+  "configuration": {
+    "TypeName": "Configuration",
+    "Id": "6464509a2e05958d543c2a60",
+    "Currency": "USD",
+    "CurrencySymbol": "$",
+    "DeliveryRate": 5
+  }
+}

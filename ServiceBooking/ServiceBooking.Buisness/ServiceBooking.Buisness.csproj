@@ -21,6 +21,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Features\System\Commands\" />
     <Folder Include="Features\Resturant\Commands\" />
   </ItemGroup>
 

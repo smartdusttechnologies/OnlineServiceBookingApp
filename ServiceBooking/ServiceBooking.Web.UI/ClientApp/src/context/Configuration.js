@@ -10,6 +10,7 @@ const ConfigurationContext = React.createContext({})
 
 export const ConfigurationProvider = props => {
   const { loading, data, error } = useQuery(GETCONFIGURATION)
+  console.log(data);
   const configuration =
     loading || error || !data.configuration
       ? { currency: '', currencySymbol: '', deliveryRate: 0 }
