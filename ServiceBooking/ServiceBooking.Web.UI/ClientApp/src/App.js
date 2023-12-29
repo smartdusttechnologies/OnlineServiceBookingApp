@@ -97,7 +97,6 @@ function App() {
       />
       ;
       <Routes>
-        <Route path="/yashwa" element={<ResturantDetailTwo/>}/>
         <Route path="/" element={<Home />} />
         <Route path="/restaurant-list" element={<Restaurants />} />
         <Route path="/restaurant/:slug" element={<RestaurantDetail />} />

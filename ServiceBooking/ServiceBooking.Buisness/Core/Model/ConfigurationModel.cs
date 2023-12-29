@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace ServiceBooking.Buisness.Core.Model
 {
-    public class ConfigurationModel : Entity
+    public class ConfigurationModel 
     {
-        public string Currency { get; set; }
-        public string TypeName { get; set; }
-        public string CurrencySymbol { get; set; }
-        public string DeliveryRate { get; set; }
+        public string __typename { get; set; }
+        public string _id { get; set; }
+        public string currency { get; set; }
+        public string currencySymbol { get; set; }
+        public int deliveryRate { get; set; }
     }
 }

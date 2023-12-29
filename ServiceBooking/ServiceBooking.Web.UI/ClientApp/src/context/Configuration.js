@@ -1,20 +1,30 @@
-import { gql, useQuery } from '@apollo/client'
+import {getConfiguration} from '../services/systemServices';
 import React from 'react'
-import { getConfiguration } from '../apollo/server'
-
-const GETCONFIGURATION = gql`
-  ${getConfiguration}
-`
+import { useState,useEffect } from 'react';
 
 const ConfigurationContext = React.createContext({})
 
 export const ConfigurationProvider = props => {
-  const { loading, data, error } = useQuery(GETCONFIGURATION)
-  console.log(data);
+  const [data,setData] = useState({});
+const [loading,setLoading] = useState(true);
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const response = await getConfiguration();
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error:', error);
+        setLoading(false);
+      }
+    };
+    fetchData();
+    
+  },[])
   const configuration =
-    loading || error || !data.configuration
+    loading || !data
       ? { currency: '', currencySymbol: '', deliveryRate: 0 }
-      : data.configuration
+      : data
 
   return (
     <ConfigurationContext.Provider value={configuration}>

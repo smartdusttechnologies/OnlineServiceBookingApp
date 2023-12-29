@@ -10,15 +10,17 @@ import clsx from "clsx";
 import React, { useContext, useEffect, useState } from "react";
 import DeliveryIcon from "../../../assets/icons/DeliveryIcon";
 import UserContext from "../../../context/User";
-import { useRestaurant } from "../../../hooks";
+import { getRestaurant } from "../../../services/resturantServices";
 import CartItem from "./CartItem";
 import PricingView from "./PricingView";
 import useStyles from "./styles";
+import { responsePathAsArray } from "graphql";
 
 function CartView(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [loadingData, setLoadingData] = useState(true);
+  const [data, setData] = useState({});
   const {
     clearCart,
     restaurant: cartRestaurant,
@@ -28,9 +30,23 @@ function CartView(props) {
     removeQuantity,
     updateCart,
   } = useContext(UserContext);
-  const { data } = useRestaurant(cartRestaurant);
-  const restaurantData = data?.restaurant ?? null;
+ 
 
+  const restaurantData = data?.restaurant ?? null;
+  useEffect(()=>{
+    const fetchData = async () => {
+    try {
+      const response = await getRestaurant(2, cartRestaurant);
+      console.log('Data:', response.data);
+      setData(response.data);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error:', error);
+      setLoadingData(false);
+    }
+  };
+  fetchData();
+  })
   useEffect(() => {
     if (restaurantData) didFocus();
   }, [restaurantData, cartCount]);

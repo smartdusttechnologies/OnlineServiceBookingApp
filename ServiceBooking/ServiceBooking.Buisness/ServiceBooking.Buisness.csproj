@@ -17,10 +17,15 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <Folder Include="Features\Organization\Commands\" />
+    <Folder Include="Features\SecurityParameter\Commands\" />
+    <Folder Include="Features\Role\Commands\" />
+    <Folder Include="Features\Role\Queries\" />
     <Folder Include="Features\System\Commands\" />
     <Folder Include="Features\Resturant\Commands\" />
   </ItemGroup>

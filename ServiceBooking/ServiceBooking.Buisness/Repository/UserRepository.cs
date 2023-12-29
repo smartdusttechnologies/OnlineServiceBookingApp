@@ -45,6 +45,14 @@ namespace ServiceBooking.Business.Repository
             return db.Query<UserModel>("Select top 1 * From [User] where UserName=@userName and IsDeleted=0", new { userName }).FirstOrDefault();
         }
         /// <summary>
+        /// Get User Based on Name
+        /// </summary>
+        public UserModel EmailExist(string email)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UserModel>("Select top 1 * From [User] where Email=@email and IsDeleted=0", new { email }).FirstOrDefault();
+        }
+        /// <summary>
         /// Method to Insert User Info in DB
         /// </summary>
         public int Insert(UserModel user, PasswordLogin passwordLogin)

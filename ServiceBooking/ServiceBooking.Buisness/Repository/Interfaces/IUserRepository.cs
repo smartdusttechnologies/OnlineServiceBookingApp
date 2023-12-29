@@ -11,5 +11,6 @@ namespace ServiceBooking.Business.Data.Repository.Interfaces
         UserModel Get(string userName);
         int Insert(UserModel user, PasswordLogin passwordLogin);
         int Update(ChangePasswordModel newpassword);
+        UserModel EmailExist(string email);
     }
 }

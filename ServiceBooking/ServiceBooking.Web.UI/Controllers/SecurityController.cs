@@ -5,6 +5,9 @@ using ServiceBooking.Business.Common;
 using AutoMapper;
 using ServiceBooking.Buisness.Core.Model.Security;
 using ServiceBooking.Buisness.Core.Model;
+using MediatR;
+using ServiceBooking.Buisness.Features.Authentication.Commands;
+using ServiceBooking.Buisness.Features.SecurityParamters.Queries;
 
 namespace ServiceBooking.Controllers
 {
@@ -12,28 +15,28 @@ namespace ServiceBooking.Controllers
     [Route("api/[controller]")]
     public class SecurityController : Controller
     {
-        //private readonly IAuthenticationService _authenticationService;
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        //public SecurityController(IAuthenticationService authenticationService,IMapper mapper)
-        //{
-        //    _authenticationService = authenticationService;
-        //    _mapper = mapper;
-        //}
+        public SecurityController(IMediator mediator, IMapper mapper)
+        {
+            _mediator = mediator;
+            _mapper = mapper;
+        }
         [HttpPost]
         [Route("SignUp")]
         public IActionResult SignUp(UserDTO user)
         {
             var userModel = _mapper.Map<UserDTO,UserModel>(user);
             userModel.IsActive = true;
-           // RequestResult<bool> result = _authenticationService.Add(userModel);
-            if (true)
+            var result = _mediator.Send(new SignUp.Command(userModel)).Result;
+            if (result.IsSuccessful)
             {
                 List<ValidationMessage> success = new List<ValidationMessage>
                 {
                     new ValidationMessage { Reason = "Sign Up Successfully", Severity = ValidationSeverity.Information, SourceId = "fields" }
                 };
-                //result.Message = success;
-                //return Json(result);
+                result.Message = success;
+                return Json(result);
             }
             return BadRequest("sf");
         }
@@ -46,7 +49,7 @@ namespace ServiceBooking.Controllers
         public IActionResult Login(LoginDTO loginRequest)
         {
             var loginReq = new LoginRequest { UserName = loginRequest.UserName, Password = loginRequest.Password };
-            RequestResult<LoginToken> result = new();
+            RequestResult<LoginToken> result = _mediator.Send(new Login.Command(loginReq)).Result;
             if (result.IsSuccessful)
             {
                 List<ValidationMessage> success = new List<ValidationMessage>
@@ -72,7 +75,7 @@ namespace ServiceBooking.Controllers
                     Username = changepasswordDTO.Username,
                     UserId = changepasswordDTO.UserId,
                 };
-                var result = new RequestResult<string>();
+                var result = _mediator.Send(new ChangePassword.Command(changepasswordRequest)).Result;
                 if (result.IsSuccessful)
                 {
                     List<ValidationMessage> success = new List<ValidationMessage>
@@ -92,6 +95,17 @@ namespace ServiceBooking.Controllers
                 };
                 return Json(new RequestResult<bool>(errors));
             }
+        }
+        [HttpGet]
+        [Route("EmailExist")]
+        public IActionResult EmailExist(string email)
+        {
+            var result = _mediator.Send(new EmailExist.Command(email)).Result;
+            if(result.IsSuccessful)
+            {
+                return Ok(true);
+            }
+            return BadRequest(result.Message);
         }
     }
 }

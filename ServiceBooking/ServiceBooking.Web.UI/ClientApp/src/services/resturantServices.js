@@ -5,8 +5,8 @@ import {axiosInstance} from "../utils/axiosInstance";
 import { execute } from 'graphql';
 
  export function getRestaurant(id, slug) {
-  return axios.get(`/api/resturant/GetResturantDetail/${slug}`);
+  return axiosInstance.get(`api/resturant/GetResturantDetail/${slug}`);
 }
 export function getRestaurents() {
-    return axios.get("/api/resturant/GetResturant");
+    return axiosInstance.get("api/resturant/GetResturant");
 }

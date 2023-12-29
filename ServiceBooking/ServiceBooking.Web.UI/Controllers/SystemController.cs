@@ -16,7 +16,7 @@ namespace ServiceBooking.Web.UI.Controllers
         }
         [Route("GetConfiguration")]
         [HttpGet]
-        public ConfigurationModel GetResturant()
+        public ConfigurationModel GetConfiguration()
         {
             var resp = _mediator.Send(new GetConfiguration.Command());
             var s = resp.Result;

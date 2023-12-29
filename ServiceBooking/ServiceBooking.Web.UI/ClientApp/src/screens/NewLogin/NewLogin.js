@@ -1,4 +1,3 @@
-import { gql, useMutation } from "@apollo/client";
 import { Avatar } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -8,19 +7,15 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { useCallback, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { emailExist } from "../../apollo/server";
 import EmailImage from "../../assets/images/email.png";
 import FlashMessage from "../../components/FlashMessage";
 import { LoginWrapper } from "../Wrapper";
 import useStyles from "./styles";
-
+import { emailExist } from "../../services/userService";
 function isValidEmailAddress(address) {
   return /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(address);
 }
 
-const EMAIL = gql`
-  ${emailExist}
-`;
 
 function NewLogin() {
   const theme = useTheme();
@@ -29,13 +24,15 @@ function NewLogin() {
   const formRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const [EmailEixst, { loading }] = useMutation(EMAIL, {
-    onCompleted,
-    onError,
-  });
+  const [loading,setLoading] = useState(false);
+  // const [EmailEixst, { loading }] = useMutation(EMAIL, {
+  //   onCompleted,
+  //   onError,
+  // });
 
-  function onCompleted({ emailExist }) {
-    if (emailExist?._id !== null) {
+  async function emailVerify(email) {
+    var response = await emailExist(email);
+    if (response.data?.IsSuccessful) {
       navigate("/login-email", {
         replace: true,
         state: {
@@ -61,7 +58,8 @@ function NewLogin() {
     const emailValue = formRef.current["email"].value;
     if (isValidEmailAddress(emailValue)) {
       setError("");
-      EmailEixst({ variables: { email: emailValue } });
+      setLoading(true);
+      emailVerify(emailValue);
     } else {
       setError("Invalid Email");
     }
