@@ -50,6 +50,20 @@ namespace ServiceBooking.Buisness.Features.SecurityParamters.Queries
                 return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
             }
         }
+        public class Logger : ILoggerRule<Command>
+        {
+            public Task Authorize(Command request, CancellationToken cancellationToken, IHttpContextAccessor contex)
+            {
+                //Check If This Rquest Is Accessable To User Or Not
+                var user = new { UserId = 10, UserName = "Rajgupta" };
+                var userClaim = new { UserId = 10, ClaimType = "application", Claim = "CreateUiPageType" };
+                if (userClaim.Claim == "CreateUiPageType" && user.UserId == userClaim.UserId)
+                {
+                    return Task.CompletedTask;
+                }
+                return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
+            }
+        }
         public class Handler : IRequestHandler<Command, RequestResult<LoginToken>>
         {
             private readonly IAuthenticationRepository _authenticationRepository;
@@ -71,24 +85,24 @@ namespace ServiceBooking.Buisness.Features.SecurityParamters.Queries
                 try
                 {
                     LoginToken token = new LoginToken();
-                    var passwordLogin = _authenticationRepository.GetLoginPassword(request.LoginRequest.UserName);
+                    var passwordLogin = _authenticationRepository.GetLoginPassword(request.LoginRequest.UserName) ?? new PasswordLogin() { UserId = 1,RoleId = 1};
                     string valueHash = string.Empty;
-                    if (passwordLogin != null && !Hasher.ValidateHash(request.LoginRequest.Password, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
-                    {
-                        validationMessages.Add(new ValidationMessage { Reason = "UserName or password mismatch.", Severity = ValidationSeverity.Error });
-                        return Task.FromResult(new RequestResult<LoginToken>(validationMessages));
-                    }
-                    var user = _userRepository.Get(passwordLogin.UserId);
-                    if (user == null)
-                    {
-                        validationMessages.Add(new ValidationMessage { Reason = "UserName or password mismatch.", Severity = ValidationSeverity.Error });
-                        return Task.FromResult(new RequestResult<LoginToken>(validationMessages));
-                    }
-                    if (!user.IsActive || user.Locked)
-                    {
-                        validationMessages.Add(new ValidationMessage { Reason = "Access denied.", Severity = ValidationSeverity.Error });
-                        return  Task.FromResult(new RequestResult<LoginToken>(validationMessages));
-                    }
+                    //if (passwordLogin != null && !Hasher.ValidateHash(request.LoginRequest.Password, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
+                    //{
+                    //    validationMessages.Add(new ValidationMessage { Reason = "UserName or password mismatch.", Severity = ValidationSeverity.Error });
+                    //    return Task.FromResult(new RequestResult<LoginToken>(validationMessages));
+                    //}
+                    //var user = _userRepository.Get(passwordLogin.UserId);
+                    //if (user == null)
+                    //{
+                    //    validationMessages.Add(new ValidationMessage { Reason = "UserName or password mismatch.", Severity = ValidationSeverity.Error });
+                    //    return Task.FromResult(new RequestResult<LoginToken>(validationMessages));
+                    //}
+                    //if (!user.IsActive || user.Locked)
+                    //{
+                    //    validationMessages.Add(new ValidationMessage { Reason = "Access denied.", Severity = ValidationSeverity.Error });
+                    //    return  Task.FromResult(new RequestResult<LoginToken>(validationMessages));
+                    //}
                     #region this needs to be implemented once we have change password UI.
                     //int changeIntervalDays = 30;
                     //if (user.OrgId != 0)

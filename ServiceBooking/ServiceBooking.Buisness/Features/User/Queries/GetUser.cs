@@ -40,6 +40,20 @@ namespace ServiceBooking.Buisness.Features.User.Queries
                 return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
             }
         }
+        public class Logger : ILoggerRule<Command>
+        {
+            public Task Authorize(Command request, CancellationToken cancellationToken, IHttpContextAccessor contex)
+            {
+                //Check If This Rquest Is Accessable To User Or Not
+                var user = new { UserId = 10, UserName = "Rajgupta" };
+                var userClaim = new { UserId = 10, ClaimType = "application", Claim = "CreateUiPageType" };
+                if (userClaim.Claim == "CreateUiPageType" && user.UserId == userClaim.UserId)
+                {
+                    return Task.CompletedTask;
+                }
+                return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
+            }
+        }
         public class Handler : IRequestHandler<Command, UserModel>
         {
             private readonly IUserRepository _userRepository;

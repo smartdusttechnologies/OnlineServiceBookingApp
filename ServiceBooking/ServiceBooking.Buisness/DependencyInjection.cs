@@ -41,6 +41,23 @@ namespace ServcieBooking.Business
             services.AddTransient<IAuthorizationRule<InsertUser.Command>, InsertUser.Authorization>();
             services.AddTransient<IAuthorizationRule<GetUser.Command>, GetUser.Authorization>();
             #endregion
+            #region Logger Handler Register Start
+            services.AddTransient<ILoggerRule<GetResturant.Command>, GetResturant.Logger>();
+            services.AddTransient<ILoggerRule<GetByIdResturant.Command>, GetByIdResturant.Logger>();
+            services.AddTransient<ILoggerRule<GetConfiguration.Command>, GetConfiguration.Logger>();
+            services.AddTransient<ILoggerRule<ChangePassword.Command>, ChangePassword.Logger>();
+            services.AddTransient<ILoggerRule<SignUp.Command>, SignUp.Logger>();
+            services.AddTransient<ILoggerRule<EmailExist.Command>, EmailExist.Logger>();
+            services.AddTransient<ILoggerRule<Login.Command>, Login.Logger>();
+            services.AddTransient<ILoggerRule<GetOrganizations.Command>, GetOrganizations.Logger>();
+            services.AddTransient<ILoggerRule<ChangePasswordPolicy.Command>, ChangePasswordPolicy.Logger>();
+            services.AddTransient<ILoggerRule<GetSecurityParameter.Command>, GetSecurityParameter.Logger>();
+            services.AddTransient<ILoggerRule<ValidateEmail.Command>, ValidateEmail.Logger>();
+            services.AddTransient<ILoggerRule<ValidatePasswordPolicy.Command>, ValidatePasswordPolicy.Logger>();
+            services.AddTransient<ILoggerRule<ValidatePhoneNumber.Command>, ValidatePhoneNumber.Logger>();
+            services.AddTransient<ILoggerRule<InsertUser.Command>, InsertUser.Logger>();
+            services.AddTransient<ILoggerRule<GetUser.Command>, GetUser.Logger>();
+            #endregion
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IContactRepository,ContactRepository>();
             services.AddTransient<IAuthenticationRepository,AuthenticationRepository>();

@@ -1,13 +1,9 @@
 import { gql, useMutation } from "@apollo/client";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useState,useEffect } from "react";
 import { login } from "../apollo/server";
 import UserContext from "../context/User";
 import Analytics from "../utils/analytics";
-
-const LOGIN = gql`
-  ${login}
-`;
-
+import {register} from '../services/userService';
 function useRegistration() {
   const { setTokenAsync } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
@@ -15,6 +11,8 @@ function useRegistration() {
   const [login, setLogin] = useState(false);
   const [loginButton, loginButtonSetter] = useState(null);
   const [Login] = useMutation(LOGIN, { onCompleted, onError });
+
+  
 
   const toggleSnackbar = useCallback(() => {
     setLoginError("");

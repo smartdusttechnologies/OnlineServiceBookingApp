@@ -10,3 +10,7 @@ import {axiosInstance} from "../utils/axiosInstance";
     },
   });
  }
+ export function register(user){
+  return axiosInstance.post('api/security/singup',user);
+ }
+

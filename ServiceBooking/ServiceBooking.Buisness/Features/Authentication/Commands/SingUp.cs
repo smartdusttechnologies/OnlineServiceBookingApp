@@ -45,6 +45,20 @@ namespace ServiceBooking.Buisness.Features.Authentication.Commands
                 return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
             }
         }
+        public class Logger : ILoggerRule<Command>
+        {
+            public Task Authorize(Command request, CancellationToken cancellationToken, IHttpContextAccessor contex)
+            {
+                //Check If This Rquest Is Accessable To User Or Not
+                var user = new { UserId = 10, UserName = "Rajgupta" };
+                var userClaim = new { UserId = 10, ClaimType = "application", Claim = "CreateUiPageType" };
+                if (userClaim.Claim == "CreateUiPageType" && user.UserId == userClaim.UserId)
+                {
+                    return Task.CompletedTask;
+                }
+                return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
+            }
+        }
         public class Handler : IRequestHandler<Command, RequestResult<bool>>
         {
             private readonly IAuthenticationRepository _authenticationRepository;
@@ -77,6 +91,7 @@ namespace ServiceBooking.Buisness.Features.Authentication.Commands
                     return Task.FromResult(new RequestResult<bool>(false));
                 }
             }
+            #region Private Methods
             /// <summary>
             /// Method to Validate the New User Registation
             /// </summary>
@@ -109,6 +124,7 @@ namespace ServiceBooking.Buisness.Features.Authentication.Commands
                 var validatePasswordResult = _mediator.Send(new ValidatePasswordPolicy.Command(user.OrgId, user.Password)).Result;
                 return validatePasswordResult;
             }
+            #endregion
         }
     }
 }
