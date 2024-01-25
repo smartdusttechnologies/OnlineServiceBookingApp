@@ -124,7 +124,7 @@ namespace ServiceBooking.Buisness.Features.SecurityParamters.Queries
                     //TODO: this should be a async operation and can be made more cross-cutting design feature rather than calling inside the actual feature.
                     request.LoginRequest.LoginDate = DateTime.Now;
                     request.LoginRequest.PasswordHash = valueHash;
-                    _loggerRepository.LoginLog(request.LoginRequest);
+                    //_loggerRepository.LoginLog(request.LoginRequest);
 
                     return Task.FromResult(new RequestResult<LoginToken>(token, validationMessages));
                 }
@@ -181,9 +181,9 @@ namespace ServiceBooking.Buisness.Features.SecurityParamters.Queries
                     RefreshToken = encodedRefreshJwt,
                     RefreshTokenExpiry = DateTime.Now.AddDays(30),
                 };
-                _authenticationRepository.SaveLoginToken(loginToken);
+                //_authenticationRepository.SaveLoginToken(loginToken);
                 //TODO: this should be a async operation and can be made more cross-cutting design feature rather than calling inside the actual feature.
-                _loggerRepository.LoginTokenLog(loginToken);
+                //_loggerRepository.LoginTokenLog(loginToken);
                 return loginToken;
             }
             /// <summary>
@@ -194,7 +194,7 @@ namespace ServiceBooking.Buisness.Features.SecurityParamters.Queries
                 // Specifically add the jti (random nonce), iat (issued timestamp), and sub (subject/user) claims.
                 // You can add other claims here, if you want:
 
-                var userModel = _roleRepository.GetUserByUserName(sub);
+                //var userModel = _roleRepository.GetUserByUserName(sub);
                 //var roleClaims = roleByOrganizationWithClaims.Select(x => new Claim(ClaimTypes.Role, x.RoleName));
                 //var userRoleClaim = roleByOrganizationWithClaims.Select(x => new Claim(CustomClaimTypes.Permission, x.ClaimName));
 
@@ -212,12 +212,14 @@ namespace ServiceBooking.Buisness.Features.SecurityParamters.Queries
                 //    claims.Add(new Claim(ClaimTypes.Role, role.Item2));
                 //}
 
-                claims.Add(new Claim(CustomClaimType.UserId.ToString(), userModel.Id.ToString()));
+                //claims.Add(new Claim(CustomClaimType.UserId.ToString(), userModel.Id.ToString()));
+                claims.Add(new Claim(CustomClaimType.UserId.ToString(),"0"));
 
                 if (sub.ToLower() == "sysadmin")
                     claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), "0"));
-                else
-                    claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), userModel.OrgId.ToString()));
+                //else
+                    
+                    //claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), userModel.OrgId.ToString()));
 
                 return claims;
             }

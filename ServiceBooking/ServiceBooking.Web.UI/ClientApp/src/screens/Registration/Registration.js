@@ -17,12 +17,7 @@ import RegistrationIcon from "../../assets/images/emailLock.png";
 import { Avatar } from "@mui/material";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { gql, useMutation } from "@apollo/client";
-import { phoneExist } from "../../apollo/server";
-
-const PHONE = gql`
-  ${phoneExist}
-`;
+import { register } from "../../services/userService";
 
 function Registration() {
   const theme = useTheme();
@@ -39,47 +34,26 @@ function Registration() {
   const [lNameError, setLNameError] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(null);
-  const [PhoneEixst] = useMutation(PHONE, {
-    onCompleted,
-    onError,
-  });
-
-  function onCompleted({ phoneExist }) {
-    if (phoneExist?._id !== null) {
-      setError("Phone number already assocaited with some other user");
-      setLoading(false);
-    } else {
-      navigate("/verify-email", {
-        replace: true,
-        state: {
-          email: formRef.current["email"].value.toLowerCase().trim(),
-          password: formRef.current["userPass"].value,
-          name:
-            formRef.current["firstName"].value +
-            " " +
-            formRef.current["lastName"].value,
-          phone: `+${phone}`,
-          picture: "",
-        },
-      });
-    }
-  }
-  function onError({ error }) {
-    setError("Something went wrong");
-  }
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   const clearErrors = () => {
     setEmailError("");
     setFNameError("");
     setFNameError("");
     setPassError("");
     setError("");
+  };
+  const handlePhoneChange = (value, data, event, formattedValue) => {
+   
+    const code = data?.dialCode || "";
+    setPhone(value.replace(`+${code}`, ""));
   };
 
   const handleAction = () => {
@@ -90,20 +64,21 @@ function Registration() {
     const lastNameValue = formRef.current["lastName"].value;
     const userPass = formRef.current["userPass"].value;
     const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
     if (!isValidEmailAddress(emailValue)) {
       setEmailError("Invalid Email");
       validate = false;
     }
     if (!firstNameValue.trim()) {
-      setFNameError("Invalid Email");
+      setFNameError("Invalid First Name");
       validate = false;
     }
     if (!lastNameValue.trim()) {
-      setLNameError("Invalid Email");
+      setLNameError("Invalid Last Name");
       validate = false;
     }
     if (!userPass) {
-      setPassError("Invalid Email");
+      setPassError("Invalid Password");
       validate = false;
     }
     if (!phone) {
@@ -114,10 +89,27 @@ function Registration() {
       setPassError(
         "Invalid Password. Password must contain 1 capital letter, 1 small letter, 1 number"
       );
+      validate = false;
     }
+
     if (validate) {
       setLoading(true);
-      PhoneEixst({ variables: { phone: `+${phone}` } });
+
+      // Placeholder for user registration function
+      registerUser({
+          UserName: firstNameValue,           // User Name
+          FirstName: firstNameValue,          // First Name
+          LastName: lastNameValue,           // Last Name
+          Email: emailValue.toLowerCase().trim(),              // Email Address
+          Mobile: `${phone}`,             // Mobile
+          Country: "",            // Country
+          ISDCode: "",            // ISDCode
+          MobileValidationStatus: 0, // Mobile Validation Status
+          OrgId: 0,               // OrgId
+          Password: userPass,           // Password
+          NewPassword: userPass         // New Password
+        
+      });
     } else {
       setError("Something is missing");
     }
@@ -127,6 +119,26 @@ function Registration() {
     setError("");
   }, []);
 
+   const registerUser = async (userData) => {
+    // Replace this with your actual registration logic
+    // For example, make an API call to register the user
+    console.log("User registration data:", userData);
+    await register(userData).then((response)=>{
+      console.log(response);
+    });
+    // After successful registration, navigate to the next step
+    // navigate("/verify-email", {
+    //   replace: true,
+    //   state: {
+    //     email: userData.email,
+    //     password: userData.password,
+    //     name: `${userData.firstName} ${userData.lastName}`,
+    //     phone: userData.phone,
+    //     picture: "",
+    //   },
+    // });
+  };
+
   return (
     <LoginWrapper>
       <FlashMessage
@@ -135,25 +147,26 @@ function Registration() {
         alertMessage={error}
         handleClose={toggleSnackbar}
       />
+
       <Box display="flex">
-        <Box m="auto">
-          <Avatar
-            m="auto"
-            alt="email"
-            src={RegistrationIcon}
-            sx={{
-              width: 100,
-              height: 100,
-              display: "flex",
-              alignSelf: "center",
-            }}
-          />
-        </Box>
+        <Avatar
+          m="auto"
+          alt="email"
+          src={RegistrationIcon}
+          sx={{
+            width: 100,
+            height: 100,
+            display: "flex",
+            alignSelf: "center",
+          }}
+        />
       </Box>
+
       <Box mt={theme.spacing(1)} />
       <Typography variant="h5" className={classes.font700}>
         Let's get you started!
       </Typography>
+
       <Box mt={theme.spacing(1)} />
       <Typography
         variant="caption"
@@ -161,11 +174,11 @@ function Registration() {
       >
         First, create your account
       </Typography>
+
       <Box mt={theme.spacing(3)} />
       <form ref={formRef}>
         <TextField
           name={"email"}
-          defaultValue={state?.email ?? ""}
           error={Boolean(emailError)}
           helperText={emailError}
           variant="outlined"
@@ -177,6 +190,7 @@ function Registration() {
             },
           }}
         />
+        
         <Box className={classes.rowField}>
           <TextField
             style={{ width: "45%" }}
@@ -192,6 +206,7 @@ function Registration() {
               },
             }}
           />
+
           <TextField
             style={{ width: "45%" }}
             name={"lastName"}
@@ -207,6 +222,7 @@ function Registration() {
             }}
           />
         </Box>
+
         <TextField
           name={"userPass"}
           InputLabelProps={{
@@ -240,12 +256,13 @@ function Registration() {
           label="Password"
           type={showPassword ? "text" : "password"}
         />
+
         <Box className={classes.rowField}>
           <PhoneInput
             placeholder="Enter phone number"
             country={"pk"}
             value={phone}
-            onChange={(phone) => setPhone(phone)}
+            onChange={handlePhoneChange}
             containerStyle={{
               textAlign: "center",
               marginRight: theme.spacing(2),
@@ -265,9 +282,11 @@ function Registration() {
             }}
           />
         </Box>
+
         <Typography variant="caption" style={{ color: "red" }}>
           {phoneError}
         </Typography>
+
         <Box mt={theme.spacing(4)} />
         <Button
           variant="contained"
@@ -275,7 +294,6 @@ function Registration() {
           type="email"
           disableElevation
           disabled={loading}
-          className={classes.btnBase}
           onClick={(e) => {
             e.preventDefault();
             handleAction();

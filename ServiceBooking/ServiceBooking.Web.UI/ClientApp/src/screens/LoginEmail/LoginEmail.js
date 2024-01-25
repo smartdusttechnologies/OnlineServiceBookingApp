@@ -16,6 +16,8 @@ import { isValidEmailAddress } from "../../utils/customFunction";
 import { LoginWrapper } from "../Wrapper";
 import useStyles from "./styles";
 import { Avatar } from "@mui/material";
+import { login } from "../../services/userService";
+import useLogin from "../../hooks/useRegistration";
 
 function LoginEmail() {
   const formRef = useRef();
@@ -26,8 +28,8 @@ function LoginEmail() {
   const [passError, setPassError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { loading, loginError, setLoading, setLoginError, mutateLogin } =
-    useRegistration();
+  const { loading, loginError,loginUser, setLoading, setLoginError, mutateLogin } =
+    useLogin();
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -67,12 +69,12 @@ function LoginEmail() {
     }
     if (validate) {
       setLoading(true);
-      const user = {
-        email: emailValue,
-        password: passValue,
-        type: "default",
+      const loginRequest = {
+        UserName: emailValue,
+        Password: passValue,
       };
-      mutateLogin(user);
+      loginUser(loginRequest);
+      
     } else {
       setLoginError("Something is missing");
     }

@@ -34,7 +34,8 @@ namespace ServiceBooking.Business.Repository
         public UserModel Get(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UserModel>("Select top 1 * From [User] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
+            return new UserModel { FirstName = "Raj", LastName = "Gutpa", Email = "rajkumar00999.rk@gmail.com", Mobile = "9308337022" };
+            //return db.Query<UserModel>("Select top 1 * From [User] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
         }
         /// <summary>
         /// Get User Based on Name

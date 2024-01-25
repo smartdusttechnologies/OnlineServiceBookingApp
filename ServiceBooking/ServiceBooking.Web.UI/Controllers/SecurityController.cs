@@ -8,6 +8,7 @@ using ServiceBooking.Buisness.Core.Model;
 using MediatR;
 using ServiceBooking.Buisness.Features.Authentication.Commands;
 using ServiceBooking.Buisness.Features.SecurityParamters.Queries;
+using ServiceBooking.Buisness.Features.User.Queries;
 
 namespace ServiceBooking.Controllers
 {
@@ -21,6 +22,20 @@ namespace ServiceBooking.Controllers
         {
             _mediator = mediator;
             _mapper = mapper;
+        }
+        [HttpGet]
+        [Route("Profile")]
+        public IActionResult Profile(int userId)
+        {
+            var result = _mediator.Send(new Buisness.Features.User.Queries.Profile.Command(userId)).Result;
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("ForgotPassword")]
+        public IActionResult ForgetPassword(string email)
+        {
+            var result = _mediator.Send(new Buisness.Features.User.Queries.Profile.Command(4)).Result;
+            return Ok(result);
         }
         [HttpPost]
         [Route("SignUp")]

@@ -1,57 +1,53 @@
-import { gql, useMutation } from "@apollo/client";
-import { useCallback, useContext, useState,useEffect } from "react";
-import { login } from "../apollo/server";
+import { useCallback, useContext, useState } from "react";
 import UserContext from "../context/User";
 import Analytics from "../utils/analytics";
-import {register} from '../services/userService';
-function useRegistration() {
+import { login } from "../services/userService";
+
+function useLogin() {
   const { setTokenAsync } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
-  const [login, setLogin] = useState(false);
-  const [loginButton, loginButtonSetter] = useState(null);
-  const [Login] = useMutation(LOGIN, { onCompleted, onError });
-
-  
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [loginButton, setLoginButton] = useState(null);
 
   const toggleSnackbar = useCallback(() => {
     setLoginError("");
-    setLogin(false);
+    setLoggedIn(false);
   }, []);
 
-  async function onCompleted({ login }) {
+  async function onLoginSuccess(userData) {
     try {
-      if (login.inNewUser) {
+      if (userData != null) {
         await Analytics.identify(
           {
-            userId: login.userId,
-            name: login.name,
-            email: login.email,
+            userId: 0,
+            name: "raj gupta",
+            email: "rajgupta@gmail.com",
           },
-          login.userId
+          0
         );
         await Analytics.track(Analytics.events.USER_CREATED_ACCOUNT, {
-          userId: login.userId,
-          name: login.name,
-          email: login.email,
+          userId: 0,
+            name: "raj gupta",
+            email: "rajgupta@gmail.com",
         });
       } else {
         await Analytics.identify(
           {
-            userId: login.userId,
-            name: login.name,
-            email: login.email,
+            userId: 0,
+            name: "raj gupta",
+            email: "rajgupta@gmail.com",
           },
-          login.userId
+          0
         );
         await Analytics.track(Analytics.events.USER_LOGGED_IN, {
-          userId: login.userId,
-          name: login.name,
-          email: login.email,
+          userId: 0,
+            name: "raj gupta",
+            email: "rajgupta@gmail.com",
         });
       }
-      setLogin(true);
-      await setTokenAsync(login.token);
+      setLoggedIn(true);
+      await setTokenAsync(userData.requestedObject?.accessToken);
     } catch (e) {
       setLoginError("Something went wrong");
       console.log("Error While saving token:", e);
@@ -60,7 +56,7 @@ function useRegistration() {
     }
   }
 
-  function onError(errors) {
+  function onLoginError(errors) {
     setLoading(false);
     setLoginError(errors.message || "Invalid credentials!");
   }
@@ -68,22 +64,29 @@ function useRegistration() {
   const authenticationFailure = useCallback((response) => {
     console.log("Authentication Failed: ", response);
     setLoading(false);
-    loginButtonSetter(null);
+    setLoginButton(null);
     setLoginError("Something went wrong");
   }, []);
 
-  const mutateLogin = useCallback(
+  const loginUser = useCallback(
     async (user) => {
-      Login({
-        variables: {
-          ...user,
-        },
-      });
+      try {
+        setLoading(true);
+        await login(user).then((userData)=>{
+          console.log(userData);
+          onLoginSuccess(userData.data);
+        }).catch((error)=>{
+          console.log(error);
+        });
+        
+      } catch (error) {
+        onLoginError(error);
+      }
     },
-    [Login]
+    [setLoading, onLoginSuccess, onLoginError]
   );
 
-  const goolgeSuccess = useCallback(
+  const googleSuccess = useCallback(
     (response) => {
       const user = {
         phone: "",
@@ -93,24 +96,24 @@ function useRegistration() {
         picture: response.profileObj.imageUrl,
         type: "google",
       };
-      mutateLogin(user);
+      loginUser(user);
     },
-    [mutateLogin]
+    [loginUser]
   );
 
   return {
     loading,
     setLoading,
     loginButton,
-    loginButtonSetter,
-    mutateLogin,
-    goolgeSuccess,
+    setLoginButton,
+    loginUser,
+    googleSuccess,
     authenticationFailure,
     setLoginError,
     loginError,
-    login,
+    isLoggedIn,
     toggleSnackbar,
   };
 }
 
-export default useRegistration;
+export default useLogin;

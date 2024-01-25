@@ -40,6 +40,7 @@ namespace ServcieBooking.Business
             services.AddTransient<IAuthorizationRule<ValidatePhoneNumber.Command>, ValidatePhoneNumber.Authorization>();
             services.AddTransient<IAuthorizationRule<InsertUser.Command>, InsertUser.Authorization>();
             services.AddTransient<IAuthorizationRule<GetUser.Command>, GetUser.Authorization>();
+            services.AddTransient<IAuthorizationRule<Profile.Command>, Profile.Authorization>();
             #endregion
             #region Logger Handler Register Start
             services.AddTransient<ILoggerRule<GetResturant.Command>, GetResturant.Logger>();
@@ -56,6 +57,7 @@ namespace ServcieBooking.Business
             services.AddTransient<ILoggerRule<ValidatePasswordPolicy.Command>, ValidatePasswordPolicy.Logger>();
             services.AddTransient<ILoggerRule<ValidatePhoneNumber.Command>, ValidatePhoneNumber.Logger>();
             services.AddTransient<ILoggerRule<InsertUser.Command>, InsertUser.Logger>();
+            services.AddTransient<ILoggerRule<Profile.Command>, Profile.Logger>();
             services.AddTransient<ILoggerRule<GetUser.Command>, GetUser.Logger>();
             #endregion
             services.AddTransient<IUserRepository, UserRepository>();

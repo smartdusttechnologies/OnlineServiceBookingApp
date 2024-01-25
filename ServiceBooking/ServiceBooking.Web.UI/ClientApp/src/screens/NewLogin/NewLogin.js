@@ -32,7 +32,7 @@ function NewLogin() {
 
   async function emailVerify(email) {
     var response = await emailExist(email);
-    if (response.data?.IsSuccessful) {
+    if (!response.data?.IsSuccessful) {
       navigate("/login-email", {
         replace: true,
         state: {

@@ -11,7 +11,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { useLocation } from "react-router";
 import GoogleIcon from "../../assets/icons/GoogleIcon";
 import FlashMessage from "../../components/FlashMessage";
-import useRegistration from "../../hooks/useRegistration";
+import useLogin from "../../hooks/useRegistration";// Import the login hook
 import { LoginWrapper } from "../Wrapper";
 import useStyles from "./styles";
 
@@ -20,14 +20,14 @@ function Login() {
   const [mainError, setMainError] = useState({});
   const classes = useStyles();
   const {
-    goolgeSuccess,
+    googleSuccess,
     authenticationFailure,
     loading,
     setLoading,
-    loginButton,
+    loginWithEmail, // Replace useRegistration hook with useLogin hook
     loginButtonSetter,
     loginError,
-  } = useRegistration();
+  } = useLogin(); // Use the useLogin hook for login functionality
 
   const location = useLocation();
 
@@ -88,7 +88,7 @@ function Login() {
             disabled={renderProps.disabled || loading}
             startIcon={loading ? null : <GoogleIcon />}
           >
-            {loading && loginButton === "GOOGLE" ? (
+            {loading ? (
               <CircularProgress color="secondary" />
             ) : (
               <Typography
@@ -102,7 +102,7 @@ function Login() {
             )}
           </Button>
         )}
-        onSuccess={goolgeSuccess}
+        onSuccess={googleSuccess}
         onFailure={authenticationFailure}
         cookiePolicy={"single_host_origin"}
       />
@@ -148,6 +148,7 @@ function Login() {
           disableFocusRipple
           disableTouchRipple
           className={`${classes.btnBase} ${classes.customBtn}`}
+          onClick={loginWithEmail} // Use the loginWithEmail function
         >
           <Typography
             variant="caption"

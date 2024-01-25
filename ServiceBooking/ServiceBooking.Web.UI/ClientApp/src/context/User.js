@@ -13,6 +13,7 @@ import {
   profile,
   saveNotificationTokenWeb,
 } from "../apollo/server";
+import { getProfile } from "../services/userService";
 
 const PROFILE = gql`
   ${profile}
@@ -41,20 +42,38 @@ export const UserProvider = (props) => {
     onCompleted,
     onError,
   });
-  const [
-    fetchProfile,
-    {
-      called: calledProfile,
-      loading: loadingProfile,
-      error: errorProfile,
-      data: dataProfile,
-    },
+  const [dataProfile, setProfile] = useState(null);
+  const [loadingProfile, setLoadingProfile] = useState(true);
+  const [errorProfile, setProfileError] = useState(null);
+  const [calledProfile, setCalledProfile] = useState(true);
+  const fetchProfile = (id)=>{
+    async function fcal (){
+      const response = await getProfile(id).then(()=>{
+        setProfile(response.data);
+        setLoadingProfile(false);
+        setCalledProfile(false);
+      }).catch((error)=>{
+        setProfileError(error);
+        setLoadingProfile(false);
+        setCalledProfile(false);
+      })
+    }
+    fcal();
+  }
+  const [s
+    // fetchProfile,
+    // {
+    //   called: calledProfile,
+    //   loading: loadingProfile,
+    //   error: errorProfile,
+    //   data: dataProfile,
+    // },
   ] = useLazyQuery(PROFILE, {
     fetchPolicy: "network-only",
     onCompleted,
     onError,
   });
-
+ 
   const [
     fetchOrders,
     {
@@ -80,7 +99,7 @@ export const UserProvider = (props) => {
     let isSubscribed = true;
     (async () => {
       isSubscribed && setIsLoading(true);
-      isSubscribed && (await fetchProfile());
+      isSubscribed && (await fetchProfile(2));
       isSubscribed && (await fetchOrders());
       isSubscribed && setIsLoading(false);
     })();

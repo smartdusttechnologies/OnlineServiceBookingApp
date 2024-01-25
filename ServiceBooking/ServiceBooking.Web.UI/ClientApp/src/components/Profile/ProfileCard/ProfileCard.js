@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import gql from "graphql-tag";
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { updateUser } from "../../../apollo/server";
 import UserContext from "../../../context/User";
 import FlashMessage from "../../FlashMessage";
@@ -20,6 +20,7 @@ import IconButton from "@mui/material/IconButton";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import UnpublishedIcon from "@mui/icons-material/Unpublished";
 import { Link as RouterLink } from "react-router-dom";
+import { getProfile } from "../../../services/userService";
 
 const UPDATEUSER = gql`
   ${updateUser}
@@ -31,12 +32,20 @@ function ProfileCard() {
   const classes = useStyle();
   const [nameError, setNameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
-  const { profile } = useContext(UserContext);
+  const [ profile ,setProfile] = useState(null);
   const [error, setError] = useState({});
   const [mutate, { loading }] = useMutation(UPDATEUSER, {
     onCompleted,
     onError,
   });
+  useEffect(()=>{
+    async function fire(){
+      const response = await getProfile(2);
+      setProfile(response.data);
+      console.log(response);
+    }
+    fire();
+  },[])
   function onError(error) {
     setError({ type: "error", message: error.message });
   }
@@ -123,7 +132,8 @@ function ProfileCard() {
             name={"name"}
             variant="outlined"
             label="Name"
-            defaultValue={profile?.name ?? ""}
+           
+            value={profile?.firstName ?? ""}
             error={Boolean(nameError)}
             helperText={nameError}
             fullWidth
@@ -137,7 +147,7 @@ function ProfileCard() {
             name={"phone"}
             variant="outlined"
             label="Mobile Number"
-            defaultValue={profile?.phone ?? ""}
+            value={profile?.mobile ?? ""}
             error={Boolean(phoneError)}
             helperText={phoneError}
             fullWidth

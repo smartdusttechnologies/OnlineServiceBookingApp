@@ -13,11 +13,8 @@ import useStyles from "./styles";
 import RegistrationIcon from "../../assets/images/emailLock.png";
 import { Avatar } from "@mui/material";
 import OtpInput from "react-otp-input";
-import { forgotPassword } from "../../apollo/server";
+import { forgotPassword, verifyOtp } from "../../services/userService";
 
-const FORGOT_PASSWORD = gql`
-  ${forgotPassword}
-`;
 function VerifyForgotOtp() {
   const theme = useTheme();
   const classes = useStyles();
@@ -30,7 +27,14 @@ function VerifyForgotOtp() {
   const [otpFrom, setOtpFrom] = useState(
     Math.floor(100000 + Math.random() * 900000).toString()
   );
-  const [sendOtp] = useMutation(FORGOT_PASSWORD, { onCompleted, onError });
+  //const [sendOtp] = useMutation(FORGOT_PASSWORD, { onCompleted, onError });
+  const sendTp = (email)=>{
+    forgotPassword(email).then(()=>{
+      setOtpError(true);
+    }).catch(()=>{
+      
+    })
+  }
   const { state } = useLocation();
   useEffect(() => {
     const myInterval = setInterval(() => {
@@ -47,9 +51,9 @@ function VerifyForgotOtp() {
   });
 
   useEffect(() => {
-    sendOtp({ variables: { email: state?.email, otp: otpFrom } });
+    sendTp(state?.email);
     setSeconds(30);
-  }, [otpFrom, sendOtp, state?.email]);
+  }, [otpFrom, sendTp, state?.email]);
 
   function onCompleted() {
     try {
@@ -68,6 +72,20 @@ function VerifyForgotOtp() {
   }
 
   const onCodeFilled = async (code) => {
+    const response = await verifyOtp(code).then(()=>{
+      if(response.data){
+      navigate("/new-password", {
+        replace: true,
+        state: {
+          email: state?.email,
+        },
+      });
+    }else{
+      setOtpError(true);
+    }
+    }).catch(()=>{
+      setOtpError(true);
+    })
     if (code === otpFrom) {
       navigate("/new-password", {
         replace: true,
