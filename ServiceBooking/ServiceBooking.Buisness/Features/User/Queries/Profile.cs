@@ -4,13 +4,14 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using ServcieBooking.Business.Interface;
 using ServiceBooking.Buisness.Core.Model;
+using ServiceBooking.Buisness.Core.Model.Profile;
 using ServiceBooking.Business.Data.Repository.Interfaces;
 
 namespace ServiceBooking.Buisness.Features.User.Queries
 {
     public static class Profile
     {
-        public class Command : IRequest<UserModel>
+        public class Command : IRequest<ProfileModel>
         {
             public int Id { get; set; }
             public Command(int id)
@@ -54,7 +55,7 @@ namespace ServiceBooking.Buisness.Features.User.Queries
                 return Task.FromException(new UnauthorizedAccessException("You are Unauthorized"));
             }
         }
-        public class Handler : IRequestHandler<Command, UserModel>
+        public class Handler : IRequestHandler<Command, ProfileModel>
         {
             private readonly IUserRepository _userRepository;
 
@@ -63,7 +64,7 @@ namespace ServiceBooking.Buisness.Features.User.Queries
                _userRepository = userRepository;
             }
 
-            Task<UserModel> IRequestHandler<Command, UserModel>.Handle(Command request, CancellationToken cancellationToken)
+            Task<ProfileModel> IRequestHandler<Command, ProfileModel>.Handle(Command request, CancellationToken cancellationToken)
             {
                 return Task.FromResult(_userRepository.Get(request.Id));
             }

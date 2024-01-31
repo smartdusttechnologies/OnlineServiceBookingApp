@@ -12,7 +12,6 @@ namespace ServcieBooking.Web.UI
         {
             CreateHostBuilder(args).Build().Run();
         }
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -22,12 +21,10 @@ namespace ServcieBooking.Web.UI
     }
     public class Startup
     {
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -47,7 +44,6 @@ namespace ServcieBooking.Web.UI
                 configuration.RootPath = "ClientApp/build";
             });
             //Repository DI
-
             //Authorization Handler Initalization End
         }
 

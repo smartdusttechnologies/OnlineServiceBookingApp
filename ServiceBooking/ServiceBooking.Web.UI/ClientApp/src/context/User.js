@@ -47,11 +47,12 @@ export const UserProvider = (props) => {
   const [errorProfile, setProfileError] = useState(null);
   const [calledProfile, setCalledProfile] = useState(true);
   const fetchProfile = (id)=>{
-    async function fcal (){
-      const response = await getProfile(id).then(()=>{
+     function fcal (){
+      const response = getProfile(id).then(()=>{
         setProfile(response.data);
         setLoadingProfile(false);
         setCalledProfile(false);
+        onCompleted({profile:response.data});
       }).catch((error)=>{
         setProfileError(error);
         setLoadingProfile(false);

@@ -40,7 +40,7 @@ function ProfileCard() {
   });
   useEffect(()=>{
     async function fire(){
-      const response = await getProfile(2);
+      const response = await getProfile(55);
       setProfile(response.data);
       console.log(response);
     }
@@ -133,7 +133,7 @@ function ProfileCard() {
             variant="outlined"
             label="Name"
            
-            value={profile?.firstName ?? ""}
+            value={profile?.name ?? ""}
             error={Boolean(nameError)}
             helperText={nameError}
             fullWidth
@@ -147,7 +147,7 @@ function ProfileCard() {
             name={"phone"}
             variant="outlined"
             label="Mobile Number"
-            value={profile?.mobile ?? ""}
+            value={profile?.phone ?? ""}
             error={Boolean(phoneError)}
             helperText={phoneError}
             fullWidth

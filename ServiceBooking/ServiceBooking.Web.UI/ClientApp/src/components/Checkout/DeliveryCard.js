@@ -28,6 +28,7 @@ import AddressDetail from "./AddressDetail";
 import useStyles from "./styles";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useLocationContext } from "../../context/Location";
+import { getProfile } from "../../services/userService";
 
 const LATITUDE = 33.7001019;
 const LONGITUDE = 72.9735978;
@@ -40,7 +41,8 @@ function DeliveryCard({ selectedAddress, setSelectedAddress }) {
   const deleteId = useRef(null);
   const theme = useTheme();
   const classes = useStyles();
-  const { profile } = useContext(UserContext);
+  //const { profile } = useContext(UserContext);
+  const [profile,setProfile] = useState();
   const { location } = useLocationContext();
   const [mainError, setMainError] = useState({});
   const [adressModal, setAddressModal] = useState(false);
@@ -50,18 +52,34 @@ function DeliveryCard({ selectedAddress, setSelectedAddress }) {
     onCompleted,
     onError,
   });
-
+ 
   useEffect(() => {
+    const fetchData = () => {
+      return getProfile(206)
+        .then((res) => {
+          setProfile(res.data);
+          console.log(res, "raj data ready");
+        })
+        .catch((error) => {
+          console.error("Error fetching profile:", error);
+        });
+    };
+  
+    fetchData();
+  }, []);
+ 
+  useEffect(() => {
+   
     if (location && !addressInfo) {
       currentLocation();
     }
   }, [location]);
 
   useEffect(() => {
-    if (profile.addresses < 1) {
-      toggleShowDetail();
+    if (profile && profile.addresses && profile.addresses.length > 0) {
+      setSelectedAddress(profile.addresses[0]);
     } else {
-      setSelectedAddress(profile.addresses[0])
+      toggleShowDetail();
     }
   }, [profile]);
 
@@ -120,7 +138,13 @@ function DeliveryCard({ selectedAddress, setSelectedAddress }) {
       setMainError({});
     }, 200);
   }, []);
-
+  if(profile == null){
+    return (<><PencilIcon
+      width={100}
+      height={100}
+      viewBox="0 0 550 550"
+    /></>);
+  }
   return (
     <>
       <FlashMessage

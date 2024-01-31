@@ -1,0 +1,32 @@
+{
+  
+    "_id": "user_id",
+    "name": "Raj Gupta",
+    "phone": "123-456-7890",
+    "phoneIsVerified": true,
+    "email": "user@example.com",
+    "emailIsVerified": true,
+    "notificationToken": "notification_token",
+    "isOrderNotification": true,
+    "isOfferNotification": false,
+    "addresses": [
+      {
+        "_id": "address_id_1",
+        "label": "Home",
+        "deliveryAddress": "123 Main St",
+        "details": "Apt 4B",
+        "location": { "coordinates": [ 40.123, -74.456 ] },
+        "selected": true
+      },
+      {
+        "_id": "address_id_2",
+        "label": "Work",
+        "deliveryAddress": "456 Business Ave",
+        "details": "Floor 7",
+        "location": { "coordinates": [ 41.789, -73.012 ] },
+        "selected": false
+      }
+    ],
+    "favourite": true
+  }
+

@@ -33,6 +33,7 @@ import { calculateDistance } from "../../utils/customFunction";
 import useStyle from "./styles";
 import { SERVER_URL } from "../../config/constants";
 import Analytics from "../../utils/analytics";
+import { getRestaurant } from "../../services/resturantServices";
 
 const PLACEORDER = gql`
   ${placeOrder}
@@ -73,8 +74,10 @@ function Checkout() {
   const [selectedDate, handleDateChange] = useState(new Date());
   const [isPickUp, setIsPickUp] = useState(false);
   const [deliveryCharges, setDeliveryCharges] = useState(0);
+  const [data,setData] = useState(null);
+  const [loading,setLoading] = useState(true);
+  const error = false;
 
-  const { loading, data, error } = useRestaurant(cartRestaurant);
 
   const [mutateOrder, { loading: loadingOrderMutation }] = useMutation(
     PLACEORDER,
@@ -84,7 +87,23 @@ function Checkout() {
       update,
     }
   );
+  
+    async function fetchData() {
+      const response = await getRestaurant(3, 'example-item');
+      setData(response.data);
+      console.log(response);
+      console.log("response",response.data);
+      setLoading(false);
+    }
+    fetchData();
+  
   useEffect(() => {
+    
+   
+    // getRestaurant(3, 'example-item').then((response)=>{
+    //     setData(response.data);
+    //     console.log(response.data);
+    //  });
     if (!location) {
       let localStorageLocation = localStorage.getItem("location");
       localStorageLocation = JSON.parse(localStorageLocation);

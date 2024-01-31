@@ -4,19 +4,25 @@ using ServiceBooking.Business.Data.Repository.Interfaces;
 using ServcieBooking.Business.Infrastructure;
 using ServiceBooking.Buisness.Core.Model;
 using ServiceBooking.Buisness.Core.Model.Security;
+using Newtonsoft.Json;
+using ServiceBooking.Buisness.Core.Model.Resturant;
+using Microsoft.AspNetCore.Hosting;
+using ServiceBooking.Buisness.Core.Model.Profile;
 
 namespace ServiceBooking.Business.Repository
 {
+    
     public class UserRepository : IUserRepository
     {
         /// <summary>
         /// using the userRespository
         /// </summary>
         private readonly IConnectionFactory _connectionFactory;
-
-        public UserRepository(IConnectionFactory connectionFactory)
+        private readonly IHostingEnvironment _hostingEnviroment;
+        public UserRepository(IConnectionFactory connectionFactory, IHostingEnvironment hostingEnviroment)
         {
             _connectionFactory = connectionFactory;
+            _hostingEnviroment = hostingEnviroment;
         }
 
         /// <summary>
@@ -31,10 +37,27 @@ namespace ServiceBooking.Business.Repository
         /// <summary>
         /// Get User Based on Id
         /// </summary>
-        public UserModel Get(int id)
+        public ProfileModel Get(int id)
         {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return new UserModel { FirstName = "Raj", LastName = "Gutpa", Email = "rajkumar00999.rk@gmail.com", Mobile = "9308337022" };
+            try
+            {
+                // Specify the path to the JSON file in wwwroot
+                var filePath = Path.Combine(_hostingEnviroment.WebRootPath, "profile.json");
+
+                // Read the JSON file
+                var jsonContent = File.ReadAllText(filePath);
+
+                // Deserialize JSON to C# object
+                var myObject = JsonConvert.DeserializeObject<ProfileModel>(jsonContent);
+
+                // Use 'myObject' as needed
+                return myObject;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                return new ProfileModel();
+            }
             //return db.Query<UserModel>("Select top 1 * From [User] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
         }
         /// <summary>
