@@ -36,6 +36,7 @@ namespace ServcieBooking.Web.UI
             services.AddScoped<IResturantRepository,ResturantRepository>();
             services.AddScoped<IConnectionFactory,ConnectionFactory>();
             services.AddScoped<IResturantRepository,ResturantRepository>();
+            services.AddScoped<IOrderRepository,OrderRepository>();
             services.AddApplication();
 
             // In production, the React files will be served from this directory

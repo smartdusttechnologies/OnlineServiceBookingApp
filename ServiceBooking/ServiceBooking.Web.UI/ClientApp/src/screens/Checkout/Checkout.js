@@ -34,6 +34,8 @@ import useStyle from "./styles";
 import { SERVER_URL } from "../../config/constants";
 import Analytics from "../../utils/analytics";
 import { getRestaurant } from "../../services/resturantServices";
+import { getProfile } from "../../services/userService";
+import { orderService } from "../../services/orderServices";
 
 const PLACEORDER = gql`
   ${placeOrder}
@@ -57,7 +59,6 @@ function Checkout() {
   const [loadingData, setLoadingData] = useState(false);
   const configuration = useContext(ConfigurationContext);
   const {
-    profile,
     clearCart,
     restaurant: cartRestaurant,
     cart,
@@ -77,7 +78,7 @@ function Checkout() {
   const [data,setData] = useState(null);
   const [loading,setLoading] = useState(true);
   const error = false;
-
+  const [profile,setProfile] = useState();
 
   const [mutateOrder, { loading: loadingOrderMutation }] = useMutation(
     PLACEORDER,
@@ -87,15 +88,29 @@ function Checkout() {
       update,
     }
   );
-  
-    async function fetchData() {
-      const response = await getRestaurant(3, 'example-item');
+ 
+  useEffect(() => {
+    const fetchPro = () => {
+      return getProfile(206)
+        .then((res) => {
+          setProfile(res.data);
+          console.log(res, "raj data ready");
+        })
+        .catch((error) => {
+          console.error("Error fetching profile:", error);
+        });
+    };
+    const fetchData = () => {
+      return getRestaurant(3, 'example-item').then((response)=>{
+      
       setData(response.data);
-      console.log(response);
-      console.log("response",response.data);
       setLoading(false);
-    }
+      });
+    };
+    fetchPro();
     fetchData();
+  }, []);
+   
   
   useEffect(() => {
     
@@ -263,28 +278,25 @@ function Checkout() {
   }
   async function onCompleted(data) {
     await Analytics.track(Analytics.events.ORDER_PLACED, {
-      userId: data.placeOrder.user._id,
-      name: data.placeOrder.user.name,
-      email: data.placeOrder.user.email,
-      phoneNumber: data.placeOrder.user.phone,
-      orderId: data.placeOrder.orderId,
-      restaurantName: data.placeOrder.restaurant.name,
-      restaurantAddress: data.placeOrder.restaurant.address,
-      orderItems: data.placeOrder.items,
-      orderPaymentMethod: data.placeOrder.paymentMethod,
-      orderAmount: data.placeOrder.orderAmount,
-      orderPaidAmount: data.placeOrder.paidAmount,
-      tipping: data.placeOrder.tipping,
-      orderStatus: data.placeOrder.orderStatus,
-      orderDate: data.placeOrder.orderDate,
+      userId: data.userid,
+      orderId: data.orderId,
+      restaurantName: data.restaurant.name,
+      restaurantAddress: data.restaurant.address,
+      orderItems: data.items,
+      orderPaymentMethod: data.paymentMethod,
+      orderAmount: data.orderAmount,
+      orderPaidAmount: data.paidAmount,
+      tipping: data.tipping,
+      orderStatus: data.orderStatus,
+      orderDate: data.orderDate,
     });
     if (paymentMethod.payment === "COD") {
       await clearCart();
-      navigate(`/order-detail/${data.placeOrder._id}`, { replace: true });
+      navigate(`/order-detail/${data.id}`, { replace: true });
     } else if (paymentMethod.payment === "PAYPAL") {
-      navigate(`/paypal?id=${data.placeOrder._id}`, { replace: true });
+      navigate(`/paypal?id=${data.id}`, { replace: true });
     } else if (paymentMethod.payment === "STRIPE") {
-      window.location = `${SERVER_URL}stripe/create-checkout-session?id=${data.placeOrder.orderId}&platform=web`;
+      window.location = `${SERVER_URL}stripe/create-checkout-session?id=${data.orderId}&platform=web`;
     }
   }
 
@@ -338,9 +350,12 @@ function Checkout() {
 
   async function onPayment() {
     if (checkPaymentMethod(configuration.currency)) {
+      debugger;
+      console.log("payment");
       const items = transformOrder(cart);
-      mutateOrder({
-        variables: {
+      const req = {
+          id: 0,
+          userid: profile._id,
           restaurant: cartRestaurant,
           orderInput: items,
           paymentMethod: paymentMethod.payment,
@@ -357,8 +372,14 @@ function Checkout() {
           orderDate: selectedDate,
           isPickedUp: isPickUp,
           deliveryCharges: isPickUp ? 0 : deliveryCharges,
-        },
-      });
+        };
+        await orderService(req).then((resp)=>{
+          if(resp){
+            req.id = 1
+            onCompleted(req);
+          }
+        })
+      console.log(req,"raj reqst for order");
     } else {
       showMessage({
         type: "warning",

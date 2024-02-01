@@ -6,17 +6,33 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PencilIcon from "../../assets/icons/PencilIcon";
 import UserContext from "../../context/User";
 import useStyle from "./styles";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { getProfile } from "../../services/userService";
 
 function PersonalCard() {
   const theme = useTheme();
   const classes = useStyle();
-  const { profile } = useContext(UserContext);
+  const [profile,setProfile] = useState();
+  useEffect(() => {
+    const fetchData = () => {
+      return getProfile(206)
+        .then((res) => {
+          setProfile(res.data);
+          console.log(res, "raj data ready");
+        })
+        .catch((error) => {
+          console.error("Error fetching profile:", error);
+        });
+    };
+  
+    fetchData();
+  }, []);
+ 
   return (
     <Paper
       style={{

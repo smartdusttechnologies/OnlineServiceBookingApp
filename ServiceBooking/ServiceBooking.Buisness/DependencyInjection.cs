@@ -12,6 +12,8 @@ using ServiceBooking.Buisness.Features.Authentication.Commands;
 using ServiceBooking.Buisness.Features.SecurityParamters.Queries;
 using ServiceBooking.Buisness.Features.User.Commands;
 using ServiceBooking.Buisness.Features.User.Queries;
+using ServiceBooking.Buisness.Features.Order.Commands;
+using ServcieBooking.Business.Features.Orders.Queries;
 
 namespace ServcieBooking.Business
 {
@@ -38,9 +40,11 @@ namespace ServcieBooking.Business
             services.AddTransient<IAuthorizationRule<ValidateEmail.Command>, ValidateEmail.Authorization>();
             services.AddTransient<IAuthorizationRule<ValidatePasswordPolicy.Command>, ValidatePasswordPolicy.Authorization>();
             services.AddTransient<IAuthorizationRule<ValidatePhoneNumber.Command>, ValidatePhoneNumber.Authorization>();
+            services.AddTransient<IAuthorizationRule<NewOrder.Command>, NewOrder.Authorization>();
             services.AddTransient<IAuthorizationRule<InsertUser.Command>, InsertUser.Authorization>();
             services.AddTransient<IAuthorizationRule<GetUser.Command>, GetUser.Authorization>();
             services.AddTransient<IAuthorizationRule<Profile.Command>, Profile.Authorization>();
+            services.AddTransient<IAuthorizationRule<GetOrders.Command>, GetOrders.Authorization>();
             #endregion
             #region Logger Handler Register Start
             services.AddTransient<ILoggerRule<GetResturant.Command>, GetResturant.Logger>();
@@ -56,9 +60,12 @@ namespace ServcieBooking.Business
             services.AddTransient<ILoggerRule<ValidateEmail.Command>, ValidateEmail.Logger>();
             services.AddTransient<ILoggerRule<ValidatePasswordPolicy.Command>, ValidatePasswordPolicy.Logger>();
             services.AddTransient<ILoggerRule<ValidatePhoneNumber.Command>, ValidatePhoneNumber.Logger>();
-            services.AddTransient<ILoggerRule<InsertUser.Command>, InsertUser.Logger>();
+            services.AddTransient<ILoggerRule<NewOrder.Command>, NewOrder.Logger>();
             services.AddTransient<ILoggerRule<Profile.Command>, Profile.Logger>();
             services.AddTransient<ILoggerRule<GetUser.Command>, GetUser.Logger>();
+            services.AddTransient<ILoggerRule<InsertUser.Command>, InsertUser.Logger>();
+            services.AddTransient<ILoggerRule<NewOrder.Command>, NewOrder.Logger>();
+            services.AddTransient<ILoggerRule<GetOrders.Command>, GetOrders.Logger>();
             #endregion
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IContactRepository,ContactRepository>();

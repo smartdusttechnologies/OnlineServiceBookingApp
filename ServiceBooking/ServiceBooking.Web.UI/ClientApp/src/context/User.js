@@ -14,6 +14,7 @@ import {
   saveNotificationTokenWeb,
 } from "../apollo/server";
 import { getProfile } from "../services/userService";
+import { getOrders } from "../services/orderServices";
 
 const PROFILE = gql`
   ${profile}
@@ -46,6 +47,18 @@ export const UserProvider = (props) => {
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [errorProfile, setProfileError] = useState(null);
   const [calledProfile, setCalledProfile] = useState(true);
+  const [dataOrders,setDataOrders] = useState();
+  const [loadingOrders,setloadingOrders] = useState(false);
+  const [errorOrders,setError] = useState(false);
+  useEffect(()=>{
+    async function fetchD(){
+      return await getOrders().then((response)=>{
+        setDataOrders(response.data);
+        setloadingOrders(false);
+      })
+    }
+    fetchD();
+  },[])
   const fetchProfile = (id)=>{
      function fcal (){
       const response = getProfile(id).then(()=>{
@@ -74,14 +87,15 @@ export const UserProvider = (props) => {
     onCompleted,
     onError,
   });
+
  
   const [
     fetchOrders,
     {
       called: calledOrders,
-      loading: loadingOrders,
-      error: errorOrders,
-      data: dataOrders,
+      loading: asf,
+      error: suraj,
+      data: asdf,
       networkStatus: networkStatusOrders,
       fetchMore: fetchMoreOrders,
       subscribeToMore: subscribeToMoreOrders,

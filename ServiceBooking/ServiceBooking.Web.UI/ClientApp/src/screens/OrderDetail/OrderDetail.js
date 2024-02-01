@@ -67,10 +67,11 @@ function OrderDetail() {
     },
     [restCoordinates, destCoordinates]
   );
-
+  //const [orders,setOrders] = useState(null);
   const { loadingOrders, errorOrders, orders, clearCart } =
     useContext(UserContext);
-
+    
+console.log(loadingOrders, errorOrders, orders, clearCart);
   useEffect(async () => {
     await Analytics.track(Analytics.events.NAVIGATE_TO_ORDER_DETAIL, {
       orderId: id,
@@ -93,7 +94,7 @@ function OrderDetail() {
       </Grid>
     );
   }
-  const order = orders.find((o) => o._id === id);
+  const order = orders.find((o) => o._id === "order1Id");
   console.log("order detail", order);
   if (loadingOrders || !order) {
     return (

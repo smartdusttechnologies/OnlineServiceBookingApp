@@ -4,7 +4,7 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
 //const target = "https://localhost:44481";
 //Put controller Name Here ->
 const context = [
-    "/api/resturant", "/api/system","/api/security"
+    "/api/resturant", "/api/system","/api/security","/api/order"
 ];
 
 module.exports = function (app) {

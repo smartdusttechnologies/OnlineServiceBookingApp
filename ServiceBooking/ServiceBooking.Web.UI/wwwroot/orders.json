@@ -1,0 +1,168 @@
+{
+  "orders": [
+    {
+      "_id": "order1Id",
+      "orderId": "123456",
+      "restaurant": {
+        "_id": "restaurant1Id",
+        "name": "Sample Restaurant 1",
+        "image": "restaurant_image_url_1",
+        "slug": "sample-restaurant-1",
+        "address": "123 Main Street 1",
+        "location": {
+          "coordinates": [ 40.7128, -74.0060 ]
+        }
+      },
+      "deliveryAddress": {
+        "location": {
+          "coordinates": [ 40.7282, -73.7949 ]
+        },
+        "deliveryAddres": "456 Delivery Avenue 1"
+      },
+      "items": [
+        {
+          "_id": "item1Id",
+          "title": "Item 1",
+          "food": "Sample Food 1",
+          "description": "Description of Item 1",
+          "quantity": 2,
+          "variation": {
+            "_id": "variation1Id",
+            "title": "Large",
+            "price": 10.99,
+            "discounted": 8.99
+          },
+          "addons": [
+            {
+              "_id": "addon1Id",
+              "options": [
+                {
+                  "_id": "option1Id",
+                  "title": "Extra Cheese",
+                  "description": "Add extra cheese",
+                  "price": 1.5
+                }
+              ],
+              "title": "Customization",
+              "description": "Customize your order",
+              "quantityMinimum": 0,
+              "quantityMaximum": 5
+            }
+          ]
+        }
+      ],
+      "user": {
+        "_id": "userId1",
+        "name": "John Doe 1",
+        "phone": "123-456-7890"
+      },
+      "rider": {
+        "_id": "rider1Id",
+        "name": "Rider Name 1"
+      },
+      "review": {
+        "_id": "review1Id"
+      },
+      "paymentMethod": "Credit Card",
+      "paidAmount": 25.99,
+      "orderAmount": 30.49,
+      "orderStatus": "Delivered",
+      "deliveryCharges": 5.0,
+      "tipping": 2.0,
+      "taxationAmount": 1.5,
+      "orderDate": "2024-02-01T12:34:56Z",
+      "expectedTime": "2024-02-01T14:00:00Z",
+      "isPickedUp": true,
+      "createdAt": "2024-02-01T10:00:00Z",
+      "completionTime": "2024-02-01T14:30:00Z",
+      "cancelledAt": null,
+      "assignedAt": "2024-02-01T11:00:00Z",
+      "deliveredAt": "2024-02-01T14:30:00Z",
+      "acceptedAt": "2024-02-01T10:30:00Z",
+      "pickedAt": "2024-02-01T11:30:00Z",
+      "preparationTime": 45
+    },
+    {
+      "_id": "order2Id",
+      "orderId": "789012",
+      "restaurant": {
+        "_id": "restaurant2Id",
+        "name": "Sample Restaurant 2",
+        "image": "restaurant_image_url_2",
+        "slug": "sample-restaurant-2",
+        "address": "456 Main Street 2",
+        "location": {
+          "coordinates": [ 34.0522, -118.2437 ]
+        }
+      },
+      "deliveryAddress": {
+        "location": {
+          "coordinates": [ 34.0522, -118.2437 ]
+        },
+        "deliveryAddres": "789 Delivery Avenue 2"
+      },
+      "items": [
+        {
+          "_id": "item2Id",
+          "title": "Item 2",
+          "food": "Sample Food 2",
+          "description": "Description of Item 2",
+          "quantity": 1,
+          "variation": {
+            "_id": "variation2Id",
+            "title": "Regular",
+            "price": 8.99,
+            "discounted": 7.49
+          },
+          "addons": [
+            {
+              "_id": "addon2Id",
+              "options": [
+                {
+                  "_id": "option2Id",
+                  "title": "Extra Sauce",
+                  "description": "Add extra sauce",
+                  "price": 1.0
+                }
+              ],
+              "title": "Customization",
+              "description": "Customize your order",
+              "quantityMinimum": 0,
+              "quantityMaximum": 3
+            }
+          ]
+        }
+      ],
+      "user": {
+        "_id": "userId2",
+        "name": "Jane Doe 2",
+        "phone": "987-654-3210"
+      },
+      "rider": {
+        "_id": "rider2Id",
+        "name": "Rider Name 2"
+      },
+      "review": {
+        "_id": "review2Id"
+      },
+      "paymentMethod": "PayPal",
+      "paidAmount": 12.99,
+      "orderAmount": 15.49,
+      "orderStatus": "In Progress",
+      "deliveryCharges": 3.0,
+      "tipping": 1.0,
+      "taxationAmount": 0.5,
+      "orderDate": "2024-02-02T09:45:00Z",
+      "expectedTime": "2024-02-02T12:30:00Z",
+      "isPickedUp": false,
+      "createdAt": "2024-02-02T09:00:00Z",
+      "completionTime": "2024-02-02T09:00:00Z",
+      "cancelledAt": "2024-02-02T09:00:00Z",
+      "assignedAt": "2024-02-02T10:00:00Z",
+      "deliveredAt": "2024-02-02T09:00:00Z",
+      "acceptedAt": "2024-02-02T09:00:00Z",
+      "pickedAt": "2024-02-02T09:00:00Z",
+      "preparationTime": 30
+    }
+  ]
+}
