@@ -14,6 +14,7 @@ using ServiceBooking.Buisness.Features.User.Commands;
 using ServiceBooking.Buisness.Features.User.Queries;
 using ServiceBooking.Buisness.Features.Order.Commands;
 using ServcieBooking.Business.Features.Orders.Queries;
+using ServiceBooking.Buisness.Features.Coupon.Commands;
 
 namespace ServcieBooking.Business
 {
@@ -45,6 +46,7 @@ namespace ServcieBooking.Business
             services.AddTransient<IAuthorizationRule<GetUser.Command>, GetUser.Authorization>();
             services.AddTransient<IAuthorizationRule<Profile.Command>, Profile.Authorization>();
             services.AddTransient<IAuthorizationRule<GetOrders.Command>, GetOrders.Authorization>();
+            services.AddTransient<IAuthorizationRule<ApplyCoupon.Command>, ApplyCoupon.Authorization>();
             #endregion
             #region Logger Handler Register Start
             services.AddTransient<ILoggerRule<GetResturant.Command>, GetResturant.Logger>();
@@ -66,6 +68,7 @@ namespace ServcieBooking.Business
             services.AddTransient<ILoggerRule<InsertUser.Command>, InsertUser.Logger>();
             services.AddTransient<ILoggerRule<NewOrder.Command>, NewOrder.Logger>();
             services.AddTransient<ILoggerRule<GetOrders.Command>, GetOrders.Logger>();
+            services.AddTransient<ILoggerRule<ApplyCoupon.Command>, ApplyCoupon.Logger>();
             #endregion
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IContactRepository,ContactRepository>();

@@ -7,5 +7,6 @@ namespace ServiceBooking.Buisness.Repository.Interfaces
     {
         RequestResult<bool> NewOrder();
         OrdersModel OrdersList();
+        RequestResult<bool> ApplyCoupon(string coupon);
     }
 }

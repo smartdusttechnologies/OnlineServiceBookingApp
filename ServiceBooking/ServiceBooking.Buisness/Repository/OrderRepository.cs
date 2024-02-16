@@ -42,5 +42,9 @@ namespace ServiceBooking.Buisness.Repository
                 return new OrdersModel();
             }
         }
+        public RequestResult<bool> ApplyCoupon(string coupon)
+        {
+            return new RequestResult<bool>(true);
+        }
     }
 }

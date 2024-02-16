@@ -16,7 +16,7 @@ import { Avatar } from "@mui/material";
 import OtpInput from "react-otp-input";
 import { Link as RouterLink } from "react-router-dom";
 import { sendOtpToPhoneNumber, updateUser } from "../../apollo/server";
-import {sendOtp} from "../../services/verifyPhoneServices";
+import {sendMobileOtp, sendOtp} from "../../services/verifyPhoneServices";
 import axios from "axios";
 const SEND_OTP_TO_PHONE = gql`
   ${sendOtpToPhoneNumber}
@@ -24,30 +24,7 @@ const SEND_OTP_TO_PHONE = gql`
 const UPDATEUSER = gql`
   ${updateUser}
 `;
-function otpSend (){
 
-
-const options = {
-  method: 'POST',
-  url: 'https://control.msg91.com/api/v5/otp',
-  params: {template_id: '336b76777978353731323938', mobile: '919308337022'},
-  headers: {
-    accept: 'application/json',
-    'content-type': 'application/json',
-    authkey: '410462TuXnjGns655e40afP1'
-  },
-  data: {Param1: 'value1', Param2: 'value2', Param3: 'value3'}
-};
-
-axios
-  .request(options)
-  .then(function (response) {
-    console.log(response.data);
-  })
-  .catch(function (error) {
-    console.error(error);
-  });
-}
 function VerifyPhone() {
   const theme = useTheme();
   const classes = useStyles();
@@ -61,13 +38,19 @@ function VerifyPhone() {
     Math.floor(100000 + Math.random() * 900000).toString()
   );
   const { profile } = useContext(UserContext);
-
-  const [sendOtp, { loading: loadingOtp }] = useMutation(SEND_OTP_TO_PHONE, {
-    onCompleted: onOtpCompleted,
-    onError: onOtpError,
-  });
-  otpSend();
-  console.log(sendOtp);
+    const loadingOtp = false;
+  // const [sendOtp, { loading: loadingOtp }] = useMutation(SEND_OTP_TO_PHONE, {
+  //   onCompleted: onOtpCompleted,
+  //   onError: onOtpError,
+  // });
+  const sendOtp = async (phone,otp) =>{
+    await sendMobileOtp(phone,otp).then((response)=>{
+      onOtpCompleted();
+    }).catch((error)=>{
+      onOtpError();
+    });
+  }
+  
   useEffect(() => {
     const myInterval = setInterval(() => {
       if (seconds > 0) {
@@ -84,25 +67,21 @@ function VerifyPhone() {
 
   useEffect(() => {
     if (state?.phone) {
-      sendOtp({ variables: { phone: state?.phone, otp: otpFrom } });
+      sendOtp(state?.phone,otpFrom);
     } else {
-      sendOtp({ variables: { phone: profile?.phone, otp: otpFrom } });
+      sendOtp(profile?.phone,otpFrom);
     }
     setSeconds(30);
-  }, [otpFrom, sendOtp, state?.phone, profile?.phone]);
+  }, [otpFrom, state?.phone, profile?.phone]);
 
-  function onOtpError(error) {
-    if (error.networkError) {
+  function onOtpError() {
+    
       FlashMessage({
-        message: error.networkError.result.errors[0].message,
-      });
-    } else if (error.graphQLErrors) {
-      FlashMessage({
-        message: error.graphQLErrors[0].message,
+        message: "Something Went Wrong!",
       });
     }
-  }
-  function onOtpCompleted(data) {
+  
+  function onOtpCompleted() {
     FlashMessage({
       message: "OTP sent to your phone.",
     });

@@ -19,6 +19,7 @@ import { getCoupon, getTipping } from "../../apollo/server";
 import ConfigurationContext from "../../context/Configuration";
 import UserContext from "../../context/User";
 import useStyles from "./styles";
+import { applyCoupon } from "../../services/orderServices";
 
 const TIPPING = gql`
   ${getTipping}
@@ -55,7 +56,13 @@ function CartItemsCard({
     onCompleted: couponCompleted,
     onError: couponOnError,
   });
-
+  const verifyCoupon = (ccode)=>{
+    applyCoupon(ccode).then((response)=>{
+      couponCompleted(response.data);
+    }).catch((err)=>{
+      couponOnError();
+    });
+  }
   useEffect(() => {
     if (dataTip && !selectedTip) {
       setSelectedTip(dataTip.tips.tipVariations[1]);
@@ -66,9 +73,9 @@ function CartItemsCard({
     setTaxValue(restaurantData ? +restaurantData.tax : 0);
   }, [restaurantData]);
 
-  function couponCompleted({ coupon }) {
+  function couponCompleted(coupon) {
     if (coupon) {
-      if (coupon.enabled) {
+     
         couponRef.current = coupon;
         setCoupon(coupon);
         setCouponError("");
@@ -83,7 +90,7 @@ function CartItemsCard({
           message: "Coupon unavailable.",
         });
       }
-    }
+    
   }
   function couponOnError() {
     setCouponError("Coupon not found!");
@@ -200,7 +207,7 @@ function CartItemsCard({
               className={classes.couponBtn}
               onClick={(e) => {
                 e.preventDefault();
-                mutate({ variables: { coupon: couponText } });
+                verifyCoupon(couponText);
               }}
             >
               {couponLoading ? (

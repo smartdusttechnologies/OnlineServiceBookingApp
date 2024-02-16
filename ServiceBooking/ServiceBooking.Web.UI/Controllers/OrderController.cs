@@ -30,5 +30,11 @@ namespace ServiceBooking.Web.UI.Controllers
             var resp = _mediator.Send(new GetOrders.Command()).Result;
             return Ok(resp);
         }
+        [HttpGet]
+        [Route("applyCoupon")]
+        public IActionResult ApplyCoupon(string coupon) {
+            var resp = _mediator.Send(new GetOrders.Command()).Result;
+            return Ok(resp);
+        }
     }
 }
